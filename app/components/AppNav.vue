@@ -3,7 +3,7 @@
     <NuxtLink to="/" class="logo">Astralys</NuxtLink>
     <div class="menu-wrapper">
       <div class="menu-wrapper" ref="menuWrapper"></div>
-      <button class="menu-btn" @click="toggleMenu">
+      <button class="menu-btn" @click="toggleMenu"> 
         <span class="menu-icon">☰</span>
         Explorar
       </button>
