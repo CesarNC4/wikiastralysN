@@ -1,0 +1,23 @@
+<template>
+  <AdminListPage
+    title="Capítulos"
+    base-path="/admin/capitulos"
+    :items="items" :columns="COLS" :loading="loading"
+    :delete-error="deleteError" :search-keys="['titulo','numero','libro']"
+    @delete="e => eliminar(e, 'titulo')"
+  />
+</template>
+<script setup>
+definePageMeta({ layout: 'admin', middleware: 'admin' })
+const { items, loading, deleteError, eliminar } = useAdminList(
+  'capitulos', 'id, numero, titulo, libro, tipo, tipo_temporal, visible', 'numero'
+)
+const COLS = [
+  { key: 'numero',        label: 'Nº' },
+  { key: 'titulo',        label: 'Título' },
+  { key: 'libro',         label: 'Libro' },
+  { key: 'tipo',          label: 'Tipo',     type: 'badge' },
+  { key: 'tipo_temporal', label: 'Temporal', type: 'badge' },
+  { key: 'visible',       label: 'Visible',  type: 'bool' },
+]
+</script>

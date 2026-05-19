@@ -1,6 +1,7 @@
 <template>
   <div class="topbar">
     <NuxtLink to="/" class="logo">Astralys</NuxtLink>
+    <NuxtLink to="/busqueda" class="search-link">🔍 Buscar</NuxtLink>
     <div class="menu-wrapper">
       <div class="menu-wrapper" ref="menuWrapper"></div>
       <button class="menu-btn" @click="toggleMenu"> 
@@ -135,4 +136,16 @@ function handleOutside(e) {
   background: #1e1810;
   color: #e8dfc8;
 }
+
+.search-link {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: #5a4a30;
+  padding: 7px 12px;
+  border: 1px solid #2a2010;
+  border-radius: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.search-link:hover { color: #c8a84b; border-color: #c8a84b; }
 </style>

@@ -1,0 +1,220 @@
+/* app/assets/css/admin-form.css
+   Importado como <style scoped src="~/assets/css/admin-form.css" /> en cada formulario admin.
+   No usar en layout ni componentes globales.
+*/
+
+.form-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-back {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  padding: 8px 14px;
+  border: 1px solid #2a2010;
+  color: #5a4a30;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-back:hover { border-color: #c8a84b; color: #c8a84b; }
+
+.form-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f0e4c0;
+  letter-spacing: 0.06em;
+  flex: 1;
+}
+
+.btn-save {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  padding: 10px 20px;
+  background: #c8a84b;
+  color: #0e0b07;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  margin-left: auto;
+}
+.btn-save:hover:not(:disabled) { background: #e0c060; }
+.btn-save:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.form-error {
+  color: #e24b4a;
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.loading-msg {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #4a3a20;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+/* ── Grids ── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 16px;
+}
+@media (max-width: 900px) { .form-grid { grid-template-columns: 1fr; } }
+
+.form-grid-single {
+  max-width: 700px;
+}
+
+/* ── Sections ── */
+.section {
+  background: #12100a;
+  border: 1px solid #2a2010;
+  border-radius: 4px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+
+.sec-title {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #c8a84b;
+  opacity: 0.7;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #2a2010;
+}
+
+/* ── Fields ── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+.field-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #4a3a20;
+}
+
+.field input,
+.field select,
+.field textarea {
+  background: #0e0b07;
+  border: 1px solid #2a2010;
+  border-radius: 2px;
+  color: #e8dfc8;
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 0.95rem;
+  padding: 8px 12px;
+  outline: none;
+  resize: vertical;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus { border-color: #c8a84b; }
+
+.field input::placeholder,
+.field textarea::placeholder { color: #2a2010; }
+
+/* ── Row helpers ── */
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .row2, .row3 { grid-template-columns: 1fr; } }
+
+/* ── Checkbox ── */
+.check-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.95rem;
+  color: #7a6a50;
+  cursor: pointer;
+}
+.check-label input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: #c8a84b;
+}
+
+/* ── Image preview ── */
+.img-preview {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border: 1px solid #2a2010;
+  border-radius: 2px;
+  margin-top: 8px;
+  opacity: 0.85;
+}
+
+/* ── Dynamic list items ── */
+.dyn-item {
+  background: #0e0b07;
+  border: 1px solid #2a2010;
+  border-radius: 4px;
+  padding: 14px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.btn-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: 1px solid #3a1a10;
+  color: #6a3030;
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-remove:hover { background: #e24b4a; border-color: #e24b4a; color: #fff; }
+
+.btn-add {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed #2a2010;
+  color: #4a3a20;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  padding: 10px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  margin-top: 4px;
+}
+.btn-add:hover { border-color: #c8a84b; color: #c8a84b; }
+
+/* ── Hint ── */
+.hint {
+  font-size: 0.82rem;
+  color: #3a2a10;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+</style>
