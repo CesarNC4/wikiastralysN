@@ -38,9 +38,10 @@
       <div>
         <div class="section">
           <div class="sec-title">Imagen custom</div>
-          <Field label="URL Imagen"><input v-model="f.imagen_url" placeholder="https://..." /></Field>
-          <img v-if="f.imagen_url" :src="f.imagen_url" class="img-preview" />
-          <img v-else-if="youtubeId"
+          <Field label="Imagen">
+              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/canciones" />
+            </Field>
+          <img v-if="!f.imagen_url && youtubeId"
             :src="`https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`"
             class="img-preview" style="opacity:0.4"
           />

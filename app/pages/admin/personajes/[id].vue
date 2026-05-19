@@ -70,9 +70,12 @@
         <div>
           <div class="section">
             <div class="sec-title">Imágenes</div>
-            <Field label="URL Retrato"><input v-model="f.imagen_url" placeholder="https://..." /></Field>
-            <img v-if="f.imagen_url" :src="f.imagen_url" class="img-preview" />
-            <Field label="URL Banner" style="margin-top:10px"><input v-model="f.banner_url" placeholder="https://..." /></Field>
+            <Field label="Imagen">
+              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/personajes" />
+            </Field>
+            <Field label="Banner">
+              <CloudinaryUpload v-model="f.banner_url" label="Banner" icon="🖼" folder="wikiastralys/personajes/banners" />
+            </Field>
           </div>
           <div class="section">
             <div class="sec-title">Visibilidad</div>

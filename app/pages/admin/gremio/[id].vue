@@ -40,9 +40,12 @@
         <div>
           <div class="section">
             <div class="sec-title">Imágenes</div>
-            <Field label="URL Imagen"><input v-model="f.imagen_url" placeholder="https://..." /></Field>
-            <Field label="URL Banner"><input v-model="f.banner_url" placeholder="https://..." /></Field>
-            <img v-if="f.imagen_url" :src="f.imagen_url" class="img-preview" />
+            <Field label="Imagen">
+              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/gremio" />
+            </Field>
+            <Field label="Banner">
+              <CloudinaryUpload v-model="f.banner_url" label="Banner" icon="🖼" folder="wikiastralys/gremio/banners" />
+            </Field>
           </div>
         </div>
       </div>

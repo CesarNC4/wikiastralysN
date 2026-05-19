@@ -14,8 +14,9 @@
         <Field label="Denominación"><input v-model="f.denominacion" placeholder="Ej: Therin, Astra..." /></Field>
         <Field label="Valor relativo"><input v-model="f.valor_relativo" placeholder="Ej: 1 Therin = 100 Coppers" /></Field>
         <Field label="Descripción"><textarea v-model="f.descripcion" rows="5" /></Field>
-        <Field label="URL Imagen"><input v-model="f.imagen_url" placeholder="https://..." /></Field>
-        <img v-if="f.imagen_url" :src="f.imagen_url" class="img-preview" />
+        <Field label="Imagen">
+              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/monedas" />
+            </Field>
         <label class="check-label" style="margin-top:12px"><input type="checkbox" v-model="f.visible" /> Visible al público</label>
       </div>
     </div>

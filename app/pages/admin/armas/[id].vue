@@ -47,8 +47,9 @@
       <div>
         <div class="section">
           <div class="sec-title">Imagen</div>
-          <Field label="URL Imagen"><input v-model="f.imagen_url" placeholder="https://..." /></Field>
-          <img v-if="f.imagen_url" :src="f.imagen_url" class="img-preview" />
+          <Field label="Imagen">
+              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/armas" />
+            </Field>
         </div>
         <div class="section">
           <div class="sec-title">Visibilidad</div>
