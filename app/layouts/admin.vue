@@ -28,12 +28,19 @@
       <slot />
     </main>
 
+    <Transition name="toast">
+      <div v-if="toast.msg.value" class="admin-toast" :class="toast.type.value">
+        {{ toast.msg.value }}
+      </div>
+    </Transition>
+
   </div>
 </template>
 
 <script setup>
 const supabase = useSupabaseClient()
 const router   = useRouter()
+const toast    = useToast()
 
 const TABS = [
   { label: 'Personajes',     to: '/admin/personajes' },
@@ -54,6 +61,7 @@ const TABS = [
   { label: 'Monedas',        to: '/admin/monedas' },
   { label: 'Timeline',       to: '/admin/timeline' },
   { label: 'Notas',          to: '/admin/notas' },
+  { label: 'Buscar',         to: '/admin/busqueda' },
 ]
 
 async function logout() {
@@ -174,4 +182,25 @@ async function logout() {
   margin: 0 auto;
   padding: 2rem 1.5rem 6rem;
 }
+
+/* ── Toast ── */
+.admin-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  border-radius: 2px;
+  border: 1px solid;
+  pointer-events: none;
+}
+.admin-toast.ok  { background: #0e0b07; border-color: #c8a84b; color: #c8a84b; }
+.admin-toast.err { background: #0e0b07; border-color: #e24b4a; color: #e24b4a; }
+
+.toast-enter-active, .toast-leave-active { transition: opacity 0.3s, transform 0.3s; }
+.toast-enter-from, .toast-leave-to { opacity: 0; transform: translateY(8px); }
 </style>

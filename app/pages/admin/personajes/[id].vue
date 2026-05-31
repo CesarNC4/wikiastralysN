@@ -88,7 +88,9 @@
       <div v-if="tab === 'historia'" class="form-grid-single">
         <div class="section">
           <div class="sec-title">Historia Personal</div>
-          <Field label="Historia"><textarea v-model="f.historia" rows="20" /></Field>
+          <Field label="Historia">
+            <RichEditor v-model="f.historia" placeholder="Historia del personaje..." />
+          </Field>
         </div>
       </div>
 
@@ -461,10 +463,15 @@
       <div v-if="tab === 'stats'" class="form-grid-single">
         <div class="section">
           <div class="sec-title">Atributos</div>
-          <div class="stats-grid">
-            <Field v-for="s in STAT_FIELDS" :key="s.key" :label="s.label">
-              <input type="number" :min="s.min" :max="s.max" v-model.number="stats[s.key]" />
-            </Field>
+          <div class="stats-with-chart">
+            <div class="stats-grid">
+              <Field v-for="s in STAT_FIELDS" :key="s.key" :label="s.label">
+                <input type="number" :min="s.min" :max="s.max" v-model.number="stats[s.key]" />
+              </Field>
+            </div>
+            <div class="radar-wrap">
+              <Radar :data="radarData" :options="radarOptions" />
+            </div>
           </div>
         </div>
         <div class="section">
@@ -611,6 +618,10 @@
 </template>
 
 <script setup>
+import { Radar } from 'vue-chartjs'
+import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js'
+ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend)
+
 definePageMeta({ layout: 'admin', middleware: 'admin' })
 const supabase = useSupabaseClient()
 const router   = useRouter()
@@ -656,6 +667,36 @@ const STAT_FIELDS = [
   { key: 'capacidad_de_reaccion',label: 'Reacción',   min:0, max:300 },
   { key: 'precision_val',       label: 'Precisión %', min:0, max:100 },
 ]
+const radarData = computed(() => ({
+  labels: ['Fuerza', 'Destreza', 'Constitución', 'Inteligencia', 'Sabiduría', 'Carisma'],
+  datasets: [{
+    data: [
+      stats.value.fuerza        || 0,
+      stats.value.destreza       || 0,
+      stats.value.constitucion   || 0,
+      stats.value.inteligencia   || 0,
+      stats.value.sabiduria      || 0,
+      stats.value.carisma        || 0,
+    ],
+    backgroundColor: 'rgba(200,168,75,0.15)',
+    borderColor:     '#c8a84b',
+    pointBackgroundColor: '#c8a84b',
+    borderWidth: 1.5,
+  }],
+}))
+const radarOptions = {
+  responsive: true,
+  scales: {
+    r: {
+      min: 0, max: 10, ticks: { stepSize: 2, color: '#3a2a10', font: { size: 9 }, backdropColor: 'transparent' },
+      grid: { color: '#2a2010' },
+      angleLines: { color: '#2a2010' },
+      pointLabels: { color: '#7a6a50', font: { size: 10 } },
+    },
+  },
+  plugins: { legend: { display: false } },
+}
+
 const RANGO_FIELDS = [
   { key: 'rango_cuerpo_a_cuerpo', label: 'Cuerpo a Cuerpo' },
   { key: 'rango_distancia',       label: 'Distancia' },
@@ -843,6 +884,26 @@ async function guardarPersonaje() {
     if (relaciones.value.length) {
       const rows = relaciones.value.map(r => ({ ...r, personaje_id: pjId, id_rr: undefined }))
       await supabase.from('relaciones').insert(rows)
+
+      // Insertar inversas automáticas para relaciones vinculadas a otro personaje
+      for (const rel of relaciones.value.filter(r => r.personaje_relacionado_id)) {
+        const { data: existe } = await supabase
+          .from('relaciones')
+          .select('id_rr')
+          .eq('personaje_id', rel.personaje_relacionado_id)
+          .eq('personaje_relacionado_id', pjId)
+          .maybeSingle()
+        if (!existe) {
+          await supabase.from('relaciones').insert({
+            personaje_id:            rel.personaje_relacionado_id,
+            personaje_relacionado_id: pjId,
+            tipo_relacion:            rel.tipo_relacion,
+            subtipo_relacion:         rel.subtipo_relacion,
+            descripcion:              rel.descripcion,
+            nombre_pj_organizacion:  null,
+          })
+        }
+      }
     }
 
     // Eventos
@@ -1014,6 +1075,9 @@ function tipoHitoIcon(tipo) {
 
 .dyn-num { font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.1em; color:#4a3a20; margin-bottom:8px; text-transform:uppercase; }
 .magia-preview { background:#0a0804; border:1px solid #2a2010; padding:8px 12px; font-size:0.85rem; color:#c8a84b; margin-bottom:12px; border-radius:2px; }
+.stats-with-chart { display:grid; grid-template-columns:1fr 240px; gap:20px; align-items:start; }
+@media (max-width:700px) { .stats-with-chart { grid-template-columns:1fr; } }
+.radar-wrap { background:#0e0b07; border:1px solid #2a2010; border-radius:4px; padding:14px; }
 .stats-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:10px; }
 .afil-row { display:flex; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid #1a1408; }
 .autor-badge { background:rgba(200,168,75,0.1); border:1px solid rgba(200,168,75,0.3); color:#c8a84b; padding:4px 14px; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.12em; display:inline-block; margin-bottom:8px; }

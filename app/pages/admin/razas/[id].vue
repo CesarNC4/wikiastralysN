@@ -3,9 +3,10 @@
     <div class="form-header">
       <NuxtLink to="/admin/razas" class="btn-back">← Razas</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Raza' : 'Nueva Raza' }}</h1>
-      <button class="btn-save" :disabled="saving" @click="guardar('/admin/razas')">
-        {{ saving ? 'Guardando...' : 'Guardar' }}
-      </button>
+      <div style="display:flex;gap:8px;margin-left:auto">
+        <NuxtLink v-if="isEdit" :to="`/razas/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
+        <button class="btn-save" :disabled="saving" @click="guardar('/admin/razas')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
+      </div>
     </div>
     <p v-if="error" class="form-error">{{ error }}</p>
     <div v-if="loading" class="loading-msg">Cargando...</div>

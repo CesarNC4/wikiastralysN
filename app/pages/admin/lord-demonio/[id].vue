@@ -3,7 +3,10 @@
     <div class="form-header">
       <NuxtLink to="/admin/lord-demonio" class="btn-back">← Lords Demonio</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Lord Demonio' : 'Nuevo Lord Demonio' }}</h1>
-      <button class="btn-save" :disabled="saving" @click="guardar('/admin/lord-demonio')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
+      <div style="display:flex;gap:8px;margin-left:auto">
+        <NuxtLink v-if="isEdit" :to="`/lord-demonio/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
+        <button class="btn-save" :disabled="saving" @click="guardar('/admin/lord-demonio')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
+      </div>
     </div>
     <p v-if="error" class="form-error">{{ error }}</p>
     <div v-if="loading" class="loading-msg">Cargando...</div>

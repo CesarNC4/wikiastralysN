@@ -3,7 +3,10 @@
     <div class="form-header">
       <NuxtLink to="/admin/conceptos" class="btn-back">← Conceptos</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Concepto' : 'Nuevo Concepto' }}</h1>
-      <button class="btn-save" :disabled="saving" @click="guardar('/admin/conceptos')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
+      <div style="display:flex;gap:8px;margin-left:auto">
+        <NuxtLink v-if="isEdit" :to="`/conceptos/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
+        <button class="btn-save" :disabled="saving" @click="guardar('/admin/conceptos')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
+      </div>
     </div>
     <p v-if="error" class="form-error">{{ error }}</p>
     <div v-if="loading" class="loading-msg">Cargando...</div>
@@ -25,7 +28,9 @@
         <div class="section">
           <div class="sec-title">Contenido</div>
           <Field label="Descripción corta"><textarea v-model="f.descripcion" rows="3" /></Field>
-          <Field label="Contenido completo"><textarea v-model="f.contenido" rows="12" placeholder="Texto largo con toda la información del concepto..." /></Field>
+          <Field label="Contenido completo">
+            <RichEditor v-model="f.contenido" placeholder="Texto largo con toda la información del concepto..." />
+          </Field>
         </div>
       </div>
       <div>

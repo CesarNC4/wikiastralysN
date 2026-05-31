@@ -3,7 +3,10 @@
     <div class="form-header">
       <NuxtLink to="/admin/lore" class="btn-back">← Lore</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Página Lore' : 'Nueva Página Lore' }}</h1>
-      <button class="btn-save" :disabled="saving" @click="guardar('/admin/lore', 'titulo')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
+      <div style="display:flex;gap:8px;margin-left:auto">
+        <NuxtLink v-if="isEdit && f.slug" :to="`/lore/${f.slug}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
+        <button class="btn-save" :disabled="saving" @click="guardar('/admin/lore', 'titulo')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
+      </div>
     </div>
     <p v-if="error" class="form-error">{{ error }}</p>
     <div v-if="loading" class="loading-msg">Cargando...</div>
@@ -22,17 +25,17 @@
           <div class="sec-title">Contenido</div>
           <Field label="Introducción"><textarea v-model="f.introduccion" rows="4" /></Field>
           <Field label="Sección 1 — Título"><input v-model="f.seccion1_titulo" /></Field>
-          <Field label="Sección 1 — Contenido"><textarea v-model="f.seccion1_contenido" rows="4" /></Field>
+          <Field label="Sección 1 — Contenido"><RichEditor v-model="f.seccion1_contenido" /></Field>
           <Field label="Sección 2 — Título"><input v-model="f.seccion2_titulo" /></Field>
-          <Field label="Sección 2 — Contenido"><textarea v-model="f.seccion2_contenido" rows="4" /></Field>
+          <Field label="Sección 2 — Contenido"><RichEditor v-model="f.seccion2_contenido" /></Field>
           <Field label="Sección 3 — Título"><input v-model="f.seccion3_titulo" /></Field>
-          <Field label="Sección 3 — Contenido"><textarea v-model="f.seccion3_contenido" rows="4" /></Field>
+          <Field label="Sección 3 — Contenido"><RichEditor v-model="f.seccion3_contenido" /></Field>
           <Field label="Sección 4 — Título"><input v-model="f.seccion4_titulo" /></Field>
-          <Field label="Sección 4 — Contenido"><textarea v-model="f.seccion4_contenido" rows="4" /></Field>
+          <Field label="Sección 4 — Contenido"><RichEditor v-model="f.seccion4_contenido" /></Field>
           <Field label="Sección 5 — Título"><input v-model="f.seccion5_titulo" /></Field>
-          <Field label="Sección 5 — Contenido"><textarea v-model="f.seccion5_contenido" rows="4" /></Field>
+          <Field label="Sección 5 — Contenido"><RichEditor v-model="f.seccion5_contenido" /></Field>
           <Field label="Sección 6 — Título"><input v-model="f.seccion6_titulo" /></Field>
-          <Field label="Sección 6 — Contenido"><textarea v-model="f.seccion6_contenido" rows="4" /></Field>
+          <Field label="Sección 6 — Contenido"><RichEditor v-model="f.seccion6_contenido" /></Field>
         </div>
       </div>
       <div>

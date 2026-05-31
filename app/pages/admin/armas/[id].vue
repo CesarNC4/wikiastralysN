@@ -3,7 +3,10 @@
     <div class="form-header">
       <NuxtLink to="/admin/armas" class="btn-back">← Armas</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Arma / Artefacto' : 'Nueva Arma / Artefacto' }}</h1>
-      <button class="btn-save" :disabled="saving" @click="guardar('/admin/armas')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
+      <div style="display:flex;gap:8px;margin-left:auto">
+        <NuxtLink v-if="isEdit" :to="`/armas/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
+        <button class="btn-save" :disabled="saving" @click="guardar('/admin/armas')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
+      </div>
     </div>
     <p v-if="error" class="form-error">{{ error }}</p>
     <div v-if="loading" class="loading-msg">Cargando...</div>

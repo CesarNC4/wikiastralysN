@@ -3,9 +3,10 @@
     <div class="form-header">
       <NuxtLink to="/admin/magia" class="btn-back">← Magia</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Fundamento' : 'Nuevo Fundamento de Magia' }}</h1>
-      <button class="btn-save" :disabled="saving" @click="guardar('/admin/magia')">
-        {{ saving ? 'Guardando...' : 'Guardar' }}
-      </button>
+      <div style="display:flex;gap:8px;margin-left:auto">
+        <NuxtLink v-if="isEdit" :to="`/magia/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
+        <button class="btn-save" :disabled="saving" @click="guardar('/admin/magia')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
+      </div>
     </div>
     <p v-if="error" class="form-error">{{ error }}</p>
     <div v-if="loading" class="loading-msg">Cargando...</div>
@@ -38,8 +39,7 @@
         <div class="section">
           <div class="sec-title">Contenido</div>
           <Field label="Contenido completo">
-            <textarea v-model="f.contenido" rows="16"
-              placeholder="Explicación completa del fundamento, mecánicas, lore, ejemplos..." />
+            <RichEditor v-model="f.contenido" placeholder="Explicación completa del fundamento, mecánicas, lore, ejemplos..." />
           </Field>
         </div>
       </div>
