@@ -23,7 +23,11 @@
             </div>
             <div class="f-group">
               <label class="f-lbl">Libro</label>
-              <input class="f-inp" v-model="f.libro" placeholder="Astralys" />
+              <select class="f-inp" v-model="f.libro">
+                <option>Astralys</option>
+                <option>Ishkoria</option>
+                <option>Wonderland</option>
+              </select>
             </div>
           </div>
           <div class="f-group">

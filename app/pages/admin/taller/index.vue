@@ -279,9 +279,17 @@
             </select>
           </div>
           <div class="f-group">
-            <label class="f-lbl">Color</label>
-            <input v-model="modalArco.color" type="color" class="color-pick" />
+            <label class="f-lbl">Tipo</label>
+            <select class="f-inp" v-model="modalArco.tipo">
+              <option value="Presente">Presente</option>
+              <option value="Pasado">Pasado</option>
+              <option value="Worldbuilding">Worldbuilding</option>
+            </select>
           </div>
+        </div>
+        <div class="f-group">
+          <label class="f-lbl">Color</label>
+          <input v-model="modalArco.color" type="color" class="color-pick" />
         </div>
         <div style="display:flex;gap:8px;margin-top:8px">
           <button class="btn-guardar" @click="crearArco">Crear Arco</button>
@@ -421,7 +429,7 @@ async function crearHoja(arcoId) {
 
 // ── Crear arco ──
 function abrirModalArco() {
-  modalArco.value = { nombre: '', descripcion: '', libro: 'Astralys', color: '#c8a84b', orden: arbol.value.length }
+  modalArco.value = { nombre: '', descripcion: '', libro: 'Astralys', tipo: 'Presente', color: '#c8a84b', orden: arbol.value.length }
 }
 async function crearArco() {
   if (!modalArco.value.nombre.trim()) return

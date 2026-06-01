@@ -95,15 +95,13 @@
         <div>
           <div class="section">
             <div class="sec-title">Imágenes</div>
-            <div class="img-field">
-              <label class="f-lbl">URL Retrato</label>
-              <input v-model="f.imagen_url" class="f-inp" placeholder="https://res.cloudinary.com/..." />
-              <span class="img-hint">Sube la imagen a Cloudinary y pega aquí la URL generada</span>
+            <div class="f-group">
+              <label class="f-lbl">Retrato</label>
+              <CloudinaryUpload v-model="f.imagen_url" folder="wikiastralys/personajes" />
             </div>
-            <div class="img-field">
-              <label class="f-lbl">URL Banner</label>
-              <input v-model="f.banner_url" class="f-inp" placeholder="https://res.cloudinary.com/..." />
-              <span class="img-hint">Sube la imagen a Cloudinary y pega aquí la URL generada</span>
+            <div class="f-group">
+              <label class="f-lbl">Banner</label>
+              <CloudinaryUpload v-model="f.banner_url" folder="wikiastralys/personajes/banners" />
             </div>
           </div>
           <div class="section">

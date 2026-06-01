@@ -23,6 +23,24 @@
               <span class="hint">Usa números (incluido negativos). El timeline se ordena numéricamente.</span>
             </div>
             <div class="f-group">
+              <label class="f-lbl">Orden</label>
+              <input class="f-inp" type="number" v-model.number="f.orden" placeholder="0" />
+              <span class="hint">Ordena eventos con la misma fecha. Negativos = más antiguo.</span>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="f-group">
+              <label class="f-lbl">Era</label>
+              <select class="f-inp" v-model="f.era">
+                <option value="">— Sin asignar —</option>
+                <option value="Era Primordial">Era Primordial</option>
+                <option value="Era Pre-Ishkoria">Era Pre-Ishkoria</option>
+                <option value="Era de Ishkoria">Era de Ishkoria</option>
+                <option value="Era de la Fragmentación">Era de la Fragmentación</option>
+                <option value="Era Presente">Era Presente</option>
+              </select>
+            </div>
+            <div class="f-group">
               <label class="f-lbl">Importancia</label>
               <select class="f-inp" v-model="f.importancia">
                 <option value="">—</option>
@@ -63,7 +81,7 @@
 </template>
 <script setup>
 definePageMeta({ layout: 'admin', middleware: 'admin' })
-const f = ref({ titulo: '', fecha_lore: '', importancia: '', categoria: '', descripcion: '', visible: true })
+const f = ref({ titulo: '', fecha_lore: '', orden: 0, era: '', importancia: '', categoria: '', descripcion: '', visible: true })
 const { isEdit, loading, saving, error, cargar, guardar } = useAdminForm('timeline_eventos', f)
 onMounted(cargar)
 </script>

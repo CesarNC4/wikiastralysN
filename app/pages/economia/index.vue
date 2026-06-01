@@ -35,8 +35,8 @@ const { data: monedas } = await useAsyncData('economia', async () => {
 .grid { display: flex; flex-direction: column; gap: 12px; }
 
 .card {
-  background: #16120c;
-  border: 1px solid #2a2010;
+  background: var(--s1);
+  border: 1px solid var(--bd-strong);
   border-radius: 4px;
   padding: 16px;
   display: flex;
@@ -44,13 +44,13 @@ const { data: monedas } = await useAsyncData('economia', async () => {
   align-items: flex-start;
   transition: border-color 0.2s;
 }
-.card:hover { border-color: #c8a84b; }
+.card:hover { border-color: var(--gold); }
 
 .card-img {
   width: 56px;
   height: 56px;
-  background: linear-gradient(160deg, #1e1810, #0e0c08);
-  border: 1px solid #2a2010;
+  background: linear-gradient(160deg, var(--s2), var(--bg));
+  border: 1px solid var(--bd-strong);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -58,13 +58,13 @@ const { data: monedas } = await useAsyncData('economia', async () => {
   flex-shrink: 0;
   overflow: hidden;
   font-size: 1.5rem;
-  color: #2a2010;
+  color: var(--bd-strong);
 }
 .card-img img { width: 100%; height: 100%; object-fit: cover; }
 
 .card-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-.nombre { font-family: 'Cinzel', serif; font-size: 13px; color: #e8dfc8; letter-spacing: 0.08em; }
-.denom { font-family: 'Cinzel', serif; font-size: 10px; color: #c8a84b; letter-spacing: 0.15em; opacity: 0.8; }
-.desc { font-size: 0.95rem; color: #7a6a50; line-height: 1.6; margin-top: 4px; }
-.valor { font-size: 11px; color: #4a3a20; font-style: italic; margin-top: 4px; border-top: 1px solid #1e1810; padding-top: 6px; }
+.nombre { font-family: 'Cinzel', serif; font-size: 13px; color: var(--t1); letter-spacing: 0.08em; }
+.denom { font-family: 'Cinzel', serif; font-size: 10px; color: var(--gold); letter-spacing: 0.15em; opacity: 0.8; }
+.desc { font-size: 0.95rem; color: var(--t2); line-height: 1.6; margin-top: 4px; }
+.valor { font-size: 11px; color: var(--t3); font-style: italic; margin-top: 4px; border-top: 1px solid var(--bd); padding-top: 6px; }
 </style>

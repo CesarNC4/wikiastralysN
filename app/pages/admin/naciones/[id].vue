@@ -87,15 +87,15 @@
           <div class="sec-title">Historia y Sociedad</div>
           <div class="f-group">
             <label class="f-lbl">Historia</label>
-            <textarea class="f-area" v-model="f.historia" rows="6"></textarea>
+            <RichEditor v-model="f.historia" placeholder="Historia de la nación..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Estructura y Sociedad</label>
-            <textarea class="f-area" v-model="f.estructura" rows="5"></textarea>
+            <RichEditor v-model="f.estructura" placeholder="Sistema social y político..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Estado Actual</label>
-            <textarea class="f-area" v-model="f.estado_actual" rows="4"></textarea>
+            <RichEditor v-model="f.estado_actual" placeholder="Situación presente..." />
           </div>
         </div>
 

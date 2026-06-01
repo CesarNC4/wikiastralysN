@@ -64,15 +64,15 @@
           <div class="sec-title">Historia y Estructura</div>
           <div class="f-group">
             <label class="f-lbl">Historia</label>
-            <textarea class="f-area" v-model="f.historia" rows="6"></textarea>
+            <RichEditor v-model="f.historia" placeholder="Historia de la familia..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Núcleo Familiar</label>
-            <textarea class="f-area" v-model="f.estructura_nucleo" rows="3"></textarea>
+            <RichEditor v-model="f.estructura_nucleo" placeholder="Miembros del núcleo..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Círculo Extendido</label>
-            <textarea class="f-area" v-model="f.circulo_extendido" rows="3"></textarea>
+            <RichEditor v-model="f.circulo_extendido" placeholder="Parientes y allegados..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Liderazgo</label>

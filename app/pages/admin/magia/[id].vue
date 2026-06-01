@@ -25,16 +25,26 @@
               <select class="f-inp" v-model="f.categoria">
                 <option>Concepto</option>
                 <option>Fundamento</option>
-                <option>Consciencia</option>
-                <option>Elemento</option>
-                <option>Sistema</option>
+                <option>Elemental</option>
+                <option>Demoniaca</option>
+                <option>TecnicaAvanzada</option>
                 <option>Habilidad</option>
                 <option>Otro</option>
               </select>
             </div>
             <div class="f-group">
               <label class="f-lbl">Subcategoría</label>
-              <input class="f-inp" v-model="f.subcategoria" placeholder="Ej: Essentia, Zenithra..." />
+              <select v-if="f.categoria === 'Elemental'" class="f-inp" v-model="f.subcategoria">
+                <option value="">—</option>
+                <option>Cryo</option>
+                <option>Dendro</option>
+                <option>Electro</option>
+                <option>Geo</option>
+                <option>Hydro</option>
+                <option>Pyro</option>
+                <option>Vento</option>
+              </select>
+              <input v-else class="f-inp" v-model="f.subcategoria" placeholder="Ej: Essentia, Zenithra..." />
             </div>
             <div class="f-group">
               <label class="f-lbl">Orden</label>

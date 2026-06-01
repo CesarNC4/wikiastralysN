@@ -59,6 +59,21 @@
             <label class="f-lbl">Portador actual (texto)</label>
             <input class="f-inp" v-model="f.propietario_actual" placeholder="Nombre del portador" />
           </div>
+          <div class="f-group">
+            <label class="f-lbl">Propietario (personaje vinculado)</label>
+            <div class="autocomplete-wrap">
+              <input v-model="pjBusqueda" placeholder="Buscar personaje..." class="f-inp"
+                @input="filtrarPjs" autocomplete="off" />
+              <div v-if="pjsFiltrados.length" class="autocomplete-list">
+                <div v-for="p in pjsFiltrados" :key="p.id" class="autocomplete-item"
+                  @mousedown.prevent="seleccionarPj(p)">{{ p.nombre }}</div>
+              </div>
+            </div>
+            <p v-if="f.propietario_id" class="hint">Vinculado: {{ pjNombre }}
+              <button style="font-size:0.75rem;margin-left:8px;background:transparent;border:none;color:#e24b4a;cursor:pointer"
+                @click="f.propietario_id = null; pjBusqueda = ''">✕ Quitar</button>
+            </p>
+          </div>
         </div>
       </div>
       <div>
@@ -79,11 +94,31 @@
 </template>
 <script setup>
 definePageMeta({ layout: 'admin', middleware: 'admin' })
+const supabase = useSupabaseClient()
 const f = ref({
   nombre: '', tipo: 'Otro', descripcion: '', historia: '',
-  poder_especial: '', propietario_actual: '', imagen_url: '', visible: true,
+  poder_especial: '', propietario_actual: '', propietario_id: null, imagen_url: '', visible: true,
 })
 const { isEdit, loading, saving, error, cargar, guardar } = useAdminForm('armas_artefactos', f)
-onMounted(cargar)
+
+const todosPersonajes = ref([])
+onMounted(async () => {
+  await cargar()
+  const { data } = await supabase.from('personajes').select('id, nombre').order('nombre')
+  todosPersonajes.value = data ?? []
+})
+
+const pjBusqueda   = ref('')
+const pjsFiltrados = ref([])
+const pjNombre     = computed(() => todosPersonajes.value.find(p => p.id === f.value.propietario_id)?.nombre ?? '')
+
+function filtrarPjs() {
+  const q = pjBusqueda.value.toLowerCase()
+  pjsFiltrados.value = todosPersonajes.value.filter(p => p.nombre.toLowerCase().includes(q)).slice(0, 8)
+}
+function seleccionarPj(p) {
+  f.value.propietario_id = p.id; pjBusqueda.value = p.nombre; pjsFiltrados.value = []
+}
 </script>
 <style scoped src="~/assets/css/admin-form.css" />
+<style scoped src="~/assets/css/admin-relations.css" />

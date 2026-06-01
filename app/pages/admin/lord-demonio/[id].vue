@@ -49,11 +49,11 @@
           <div class="sec-title">Descripción y Poderes</div>
           <div class="f-group">
             <label class="f-lbl">Descripción física</label>
-            <textarea class="f-area" v-model="f.descripcion_fisica" rows="4"></textarea>
+            <RichEditor v-model="f.descripcion_fisica" placeholder="Apariencia y forma..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Devil Trigger</label>
-            <textarea class="f-area" v-model="f.devil_trigger" rows="4"></textarea>
+            <RichEditor v-model="f.devil_trigger" placeholder="Forma demoníaca..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Poder especial</label>
@@ -61,7 +61,7 @@
           </div>
           <div class="f-group">
             <label class="f-lbl">Historia</label>
-            <textarea class="f-area" v-model="f.historia" rows="6"></textarea>
+            <RichEditor v-model="f.historia" placeholder="Historia del Lord Demonio..." />
           </div>
         </div>
       </div>

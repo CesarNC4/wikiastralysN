@@ -9,7 +9,8 @@ export default defineNuxtConfig({
       exclude: ['/', '/personajes/**', '/capitulos/**', '/naciones/**', '/razas/**',
         '/organizaciones/**', '/familias/**', '/bestiario/**', '/lord-demonio/**',
         '/armas/**', '/magia/**', '/minerales/**', '/misiones/**', '/conceptos/**',
-        '/banda-sonora', '/lore/**', '/economia', '/timeline', '/busqueda'],
+        '/banda-sonora', '/lore/**', '/economia', '/timeline', '/busqueda', '/gremio',
+        '/historia', '/cosmos'],
     },
   },
   googleFonts: {

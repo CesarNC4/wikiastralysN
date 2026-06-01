@@ -22,15 +22,25 @@
           <div class="dropdown-section">
             <p class="dropdown-label">El mundo</p>
             <NuxtLink to="/naciones" class="dropdown-item" @click="menuOpen = false">Naciones</NuxtLink>
+            <NuxtLink to="/razas" class="dropdown-item" @click="menuOpen = false">Razas</NuxtLink>
             <NuxtLink to="/organizaciones" class="dropdown-item" @click="menuOpen = false">Organizaciones</NuxtLink>
+            <NuxtLink to="/gremio" class="dropdown-item" @click="menuOpen = false">El Gremio</NuxtLink>
             <NuxtLink to="/magia" class="dropdown-item" @click="menuOpen = false">Magia</NuxtLink>
             <NuxtLink to="/bestiario" class="dropdown-item" @click="menuOpen = false">Bestiario</NuxtLink>
+            <NuxtLink to="/lord-demonio" class="dropdown-item" @click="menuOpen = false">Lords Demonio</NuxtLink>
           </div>
           <div class="dropdown-section">
             <p class="dropdown-label">Lore</p>
+            <NuxtLink to="/historia" class="dropdown-item" @click="menuOpen = false">Historia</NuxtLink>
+            <NuxtLink to="/cosmos" class="dropdown-item" @click="menuOpen = false">El Cosmos</NuxtLink>
             <NuxtLink to="/familias" class="dropdown-item" @click="menuOpen = false">Familias</NuxtLink>
             <NuxtLink to="/armas" class="dropdown-item" @click="menuOpen = false">Armas</NuxtLink>
+            <NuxtLink to="/misiones" class="dropdown-item" @click="menuOpen = false">Misiones</NuxtLink>
+            <NuxtLink to="/conceptos" class="dropdown-item" @click="menuOpen = false">Conceptos</NuxtLink>
+            <NuxtLink to="/minerales" class="dropdown-item" @click="menuOpen = false">Minerales</NuxtLink>
+            <NuxtLink to="/economia" class="dropdown-item" @click="menuOpen = false">Economía</NuxtLink>
             <NuxtLink to="/timeline" class="dropdown-item" @click="menuOpen = false">Timeline</NuxtLink>
+            <NuxtLink to="/banda-sonora" class="dropdown-item" @click="menuOpen = false">Banda Sonora</NuxtLink>
           </div>
         </div>
       </div>

@@ -43,11 +43,11 @@
           <div class="sec-title">Biología y Comportamiento</div>
           <div class="f-group">
             <label class="f-lbl">Ciclo de Vida</label>
-            <textarea class="f-area" v-model="f.ciclo_vida" rows="4"></textarea>
+            <RichEditor v-model="f.ciclo_vida" placeholder="Reproducción, crecimiento..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Comportamiento</label>
-            <textarea class="f-area" v-model="f.comportamiento" rows="4"></textarea>
+            <RichEditor v-model="f.comportamiento" placeholder="Instintos y conducta..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Hábitat</label>

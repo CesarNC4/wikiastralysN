@@ -55,15 +55,15 @@
           <div class="sec-title">Lore</div>
           <div class="f-group">
             <label class="f-lbl">Historia</label>
-            <textarea class="f-area" v-model="f.historia" rows="5"></textarea>
+            <RichEditor v-model="f.historia" placeholder="Historia de la organización..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Objetivo</label>
-            <textarea class="f-area" v-model="f.objetivo" rows="3"></textarea>
+            <RichEditor v-model="f.objetivo" placeholder="Metas y propósito..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Ideología</label>
-            <textarea class="f-area" v-model="f.ideologia" rows="3"></textarea>
+            <RichEditor v-model="f.ideologia" placeholder="Filosofía y valores..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Fundación</label>

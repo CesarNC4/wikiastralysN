@@ -28,9 +28,9 @@
               <label class="f-lbl">Clasificación</label>
               <select class="f-inp" v-model="f.clasificacion">
                 <option value="">—</option>
-                <option>Humana</option><option>Élfica</option><option>Demoníaca</option>
-                <option>Divina</option><option>Bestial</option><option>Elemental</option>
-                <option>Híbrida</option><option>Otra</option>
+                <option>Primordial</option><option>Alterada_por_el_Mana</option>
+                <option>Corrupta_Maldita</option><option>Espiritual_Mistica</option>
+                <option>Artificial</option>
               </select>
             </div>
             <div class="f-group">
@@ -48,19 +48,19 @@
           <div class="sec-title">Lore</div>
           <div class="f-group">
             <label class="f-lbl">Origen</label>
-            <textarea class="f-area" v-model="f.origen" rows="5"></textarea>
+            <RichEditor v-model="f.origen" placeholder="Origen de la raza..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Rasgos Físicos</label>
-            <textarea class="f-area" v-model="f.rasgos_fisicos" rows="4"></textarea>
+            <RichEditor v-model="f.rasgos_fisicos" placeholder="Descripción física..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Cultura</label>
-            <textarea class="f-area" v-model="f.cultura" rows="4"></textarea>
+            <RichEditor v-model="f.cultura" placeholder="Cultura y costumbres..." />
           </div>
           <div class="f-group">
             <label class="f-lbl">Habilidades / Rasgos especiales</label>
-            <textarea class="f-area" v-model="f.habilidades_rasgo" rows="4"></textarea>
+            <RichEditor v-model="f.habilidades_rasgo" placeholder="Habilidades innatas..." />
           </div>
         </div>
 

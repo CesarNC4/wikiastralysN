@@ -48,14 +48,14 @@
             </div>
             <div class="f-group">
               <label class="f-lbl">Historia</label>
-              <textarea class="f-area" v-model="f.historia" rows="6"></textarea>
+              <RichEditor v-model="f.historia" placeholder="Historia del gremio..." />
             </div>
           </div>
           <div class="section">
             <div class="sec-title">Estructura</div>
             <div class="f-group">
               <label class="f-lbl">Estructura Global</label>
-              <textarea class="f-area" v-model="f.estructura_global" rows="5"></textarea>
+              <RichEditor v-model="f.estructura_global" placeholder="Organización interna..." />
             </div>
             <div class="f-group">
               <label class="f-lbl">Jerarquía de Rangos</label>
