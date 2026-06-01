@@ -33,7 +33,13 @@ const { data: capitulos } = await useAsyncData('capitulos', async () => {
 </script>
 
 <style scoped>
-.chapters { display: flex; flex-direction: column; border: 1px solid #2a2010; border-radius: 4px; overflow: hidden; }
+.chapters {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--bd);
+  border-radius: 2px;
+  overflow: hidden;
+}
 
 .row {
   display: flex;
@@ -41,21 +47,54 @@ const { data: capitulos } = await useAsyncData('capitulos', async () => {
   justify-content: space-between;
   gap: 16px;
   padding: 14px 16px;
-  background: #12100a;
-  border-bottom: 1px solid #1a1408;
-  transition: background 0.15s;
+  background: var(--s1);
+  border-bottom: 1px solid var(--bd);
+  transition: background 150ms ease;
 }
 .row:last-child { border-bottom: none; }
-.row:hover { background: #18150e; }
-.row.pendiente { opacity: 0.4; }
+.row.pendiente { opacity: 0.35; }
+
+@media (hover: hover) and (pointer: fine) {
+  .row:hover { background: var(--s2); }
+}
 
 .row-left { display: flex; align-items: center; gap: 16px; flex: 1; min-width: 0; }
-.num { font-family: 'Cinzel', serif; font-size: 10px; color: #c8a84b; letter-spacing: 0.15em; min-width: 50px; opacity: 0.7; }
+.num {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  color: var(--t3);
+  letter-spacing: 0.15em;
+  min-width: 50px;
+}
 .row-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.titulo { font-size: 1rem; color: #c8b890; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.libro { font-size: 11px; color: #4a3a20; font-style: italic; }
+.titulo {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
+  color: var(--t2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.libro {
+  font-family: 'Crimson Pro', serif;
+  font-size: 12px;
+  color: var(--t3);
+  font-style: italic;
+}
 
 .row-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
-.tipo { font-family: 'Cinzel', serif; font-size: 9px; color: #4a3a20; letter-spacing: 0.1em; }
-.temporal { font-family: 'Cinzel', serif; font-size: 9px; color: #3a2e1a; letter-spacing: 0.1em; }
+.tipo {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  color: var(--t3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.temporal {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  color: var(--t3);
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
 </style>

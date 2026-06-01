@@ -13,10 +13,14 @@
     <p v-if="error" class="form-error">{{ error }}</p>
 
     <!-- Tabs -->
-    <div class="inner-tabs">
-      <button v-for="t in TABS" :key="t.key"
-        class="inner-tab" :class="{ active: tab === t.key, autor: t.autor }"
-        @click="tab = t.key">{{ t.label }}</button>
+    <div class="tabs-wrap">
+      <button class="tabs-arrow" @click="scrollTabs(-1)" aria-label="Anterior">‹</button>
+      <div class="inner-tabs" ref="tabsEl">
+        <button v-for="t in TABS" :key="t.key"
+          class="inner-tab" :class="{ active: tab === t.key, autor: t.autor }"
+          @click="tab = t.key">{{ t.label }}</button>
+      </div>
+      <button class="tabs-arrow" @click="scrollTabs(1)" aria-label="Siguiente">›</button>
     </div>
 
     <div v-if="loading" class="loading-msg">Cargando...</div>
@@ -25,57 +29,82 @@
       <!-- ══ BÁSICO ══ -->
       <div v-if="tab === 'basico'" class="form-grid">
         <div>
-          <div class="section">
+          <div class="section" style="padding:24px">
             <div class="sec-title">Información General</div>
-            <div class="row2">
-              <Field label="Nombre *"><input v-model="f.nombre" /></Field>
-              <Field label="Apellido"><input v-model="f.surname" /></Field>
-            </div>
-            <div class="row2">
-              <Field label="Título / Apodo"><input v-model="f.titulo" /></Field>
-              <Field label="Subtítulo narrativo"><input v-model="f.subtitulo" placeholder="Ej: El que desafió al Destino" /></Field>
-            </div>
-            <Field label="Ocupación"><input v-model="f.ocupacion" /></Field>
-            <div class="row3">
-              <Field label="Edad"><input v-model="f.edad" /></Field>
-              <Field label="Género">
-                <select v-model="f.genero">
+            <div class="basico-grid">
+              <div class="f-group col-half">
+                <label class="f-lbl">Nombre *</label>
+                <input class="f-inp" v-model="f.nombre" />
+              </div>
+              <div class="f-group col-half">
+                <label class="f-lbl">Apellido</label>
+                <input class="f-inp" v-model="f.surname" />
+              </div>
+              <div class="f-group col-half">
+                <label class="f-lbl">Título / Apodo</label>
+                <input class="f-inp" v-model="f.titulo" />
+              </div>
+              <div class="f-group col-half">
+                <label class="f-lbl">Subtítulo Narrativo</label>
+                <input class="f-inp" v-model="f.subtitulo" placeholder="Ej: El que desafió al Destino" />
+              </div>
+              <div class="f-group col-full">
+                <label class="f-lbl">Ocupación</label>
+                <input class="f-inp" v-model="f.ocupacion" />
+              </div>
+              <div class="f-group col-third">
+                <label class="f-lbl">Edad</label>
+                <input class="f-inp" v-model="f.edad" />
+              </div>
+              <div class="f-group col-third">
+                <label class="f-lbl">Género</label>
+                <select class="f-inp" v-model="f.genero">
                   <option value="">—</option><option>Masculino</option><option>Femenino</option><option>Otro</option>
                 </select>
-              </Field>
-              <Field label="Altura (m)"><input type="number" step="0.01" v-model.number="f.altura" /></Field>
-            </div>
-            <div class="row2">
-              <Field label="Rango Aventurero">
-                <select v-model="f.rango_aventurero">
+              </div>
+              <div class="f-group col-third">
+                <label class="f-lbl">Altura (m)</label>
+                <input class="f-inp" type="number" step="0.01" v-model.number="f.altura" />
+              </div>
+              <div class="f-group col-half">
+                <label class="f-lbl">Rango Aventurero</label>
+                <select class="f-inp" v-model="f.rango_aventurero">
                   <option value="">—</option>
                   <option>Bronce</option><option>Plata</option><option>Oro</option>
                   <option>Platino</option><option>Diamante</option>
                 </select>
-              </Field>
-              <Field label="Lugar de Nacimiento"><input v-model="f.lugar_nacimiento" /></Field>
-            </div>
-            <div style="display:flex;gap:16px;align-items:center;margin-top:4px">
-              <label class="check-label"><input type="checkbox" v-model="f.es_invocado" /> Invocado de otro mundo</label>
-              <Field v-if="f.es_invocado" label="Tipo Invocación" style="flex:1;margin-bottom:0">
-                <select v-model="f.tipo_invocacion">
-                  <option value="">— Sin especificar —</option>
-                  <option value="Natural">Natural (Filaydea / Alice)</option>
-                  <option value="Ishkoriana">Ishkoriana (artificial)</option>
-                </select>
-              </Field>
+              </div>
+              <div class="f-group col-half">
+                <label class="f-lbl">Lugar de Nacimiento</label>
+                <input class="f-inp" v-model="f.lugar_nacimiento" />
+              </div>
+              <div class="col-full check-row">
+                <label class="check-label"><input type="checkbox" v-model="f.es_invocado" /> Este personaje fue invocado de otro mundo</label>
+                <div v-if="f.es_invocado" class="f-group" style="margin-top:12px">
+                  <label class="f-lbl">Tipo Invocación</label>
+                  <select class="f-inp" v-model="f.tipo_invocacion">
+                    <option value="">— Sin especificar —</option>
+                    <option value="Natural">Natural (Filaydea / Alice)</option>
+                    <option value="Ishkoriana">Ishkoriana (artificial)</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div>
           <div class="section">
             <div class="sec-title">Imágenes</div>
-            <Field label="Imagen">
-              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/personajes" />
-            </Field>
-            <Field label="Banner">
-              <CloudinaryUpload v-model="f.banner_url" label="Banner" icon="🖼" folder="wikiastralys/personajes/banners" />
-            </Field>
+            <div class="img-field">
+              <label class="f-lbl">URL Retrato</label>
+              <input v-model="f.imagen_url" class="f-inp" placeholder="https://res.cloudinary.com/..." />
+              <span class="img-hint">Sube la imagen a Cloudinary y pega aquí la URL generada</span>
+            </div>
+            <div class="img-field">
+              <label class="f-lbl">URL Banner</label>
+              <input v-model="f.banner_url" class="f-inp" placeholder="https://res.cloudinary.com/..." />
+              <span class="img-hint">Sube la imagen a Cloudinary y pega aquí la URL generada</span>
+            </div>
           </div>
           <div class="section">
             <div class="sec-title">Visibilidad</div>
@@ -88,9 +117,10 @@
       <div v-if="tab === 'historia'" class="form-grid-single">
         <div class="section">
           <div class="sec-title">Historia Personal</div>
-          <Field label="Historia">
+          <div class="f-group">
+            <label class="f-lbl">Historia</label>
             <RichEditor v-model="f.historia" placeholder="Historia del personaje..." />
-          </Field>
+          </div>
         </div>
       </div>
 
@@ -98,15 +128,33 @@
       <div v-if="tab === 'personalidad'" class="form-grid-single">
         <div class="section">
           <div class="sec-title">Psicología</div>
-          <Field label="Rasgos de Personalidad"><textarea v-model="f.rasgos_personalidad" rows="5" /></Field>
-          <Field label="Filosofía / Principios"><textarea v-model="f.filosofia" rows="4" /></Field>
-          <div class="row2">
-            <Field label="Motivaciones / Objetivos"><textarea v-model="f.motivacion" rows="4" /></Field>
-            <Field label="Miedos"><textarea v-model="f.miedos" rows="4" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Rasgos de Personalidad</label>
+            <textarea class="f-area" v-model="f.rasgos_personalidad" rows="5"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Filosofía / Principios</label>
+            <textarea class="f-area" v-model="f.filosofia" rows="4"></textarea>
           </div>
           <div class="row2">
-            <Field label="Gustos"><textarea v-model="f.gustos" rows="4" /></Field>
-            <Field label="Disgustos"><textarea v-model="f.disgustos" rows="4" /></Field>
+            <div class="f-group">
+              <label class="f-lbl">Motivaciones / Objetivos</label>
+              <textarea class="f-area" v-model="f.motivacion" rows="4"></textarea>
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Miedos</label>
+              <textarea class="f-area" v-model="f.miedos" rows="4"></textarea>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="f-group">
+              <label class="f-lbl">Gustos</label>
+              <textarea class="f-area" v-model="f.gustos" rows="4"></textarea>
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Disgustos</label>
+              <textarea class="f-area" v-model="f.disgustos" rows="4"></textarea>
+            </div>
           </div>
         </div>
       </div>
@@ -116,8 +164,9 @@
         <div class="section">
           <div class="sec-title">Sistema Mágico</div>
           <div class="row3">
-            <Field label="Magia Principal">
-              <select v-model="f.tipo_magia_principal">
+            <div class="f-group">
+              <label class="f-lbl">Magia Principal</label>
+              <select class="f-inp" v-model="f.tipo_magia_principal">
                 <option value="">—</option>
                 <optgroup label="Elemental">
                   <option value="Elemental (Pyro)">🔥 Pyro</option>
@@ -137,9 +186,10 @@
                   <option value="Sin Magia">Sin Magia</option>
                 </optgroup>
               </select>
-            </Field>
-            <Field label="Magia Secundaria">
-              <select v-model="f.magia_secundaria">
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Magia Secundaria</label>
+              <select class="f-inp" v-model="f.magia_secundaria">
                 <option value="N/A">N/A</option>
                 <optgroup label="Elemental">
                   <option value="Elemental (Pyro)">🔥 Pyro</option>
@@ -156,20 +206,21 @@
                   <option value="Oscura">🌑 Oscura</option>
                 </optgroup>
               </select>
-            </Field>
-            <Field label="Nivel de Consciencia">
-              <select v-model="f.nivel_de_consciencia">
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Nivel de Consciencia</label>
+              <select class="f-inp" v-model="f.nivel_de_consciencia">
                 <option value="">—</option>
                 <option>D</option><option>C</option><option>B</option><option>A</option><option>S</option>
               </select>
-            </Field>
+            </div>
           </div>
-          <Field label="Circuito Forte"><textarea v-model="f.circuito_forte" rows="3" /></Field>
-          <Field label="Essentia"><textarea v-model="f.essentia" rows="3" /></Field>
-          <Field label="Zenithra"><textarea v-model="f.zenithra" rows="3" /></Field>
-          <Field label="Bendición"><textarea v-model="f.bendicion" rows="3" /></Field>
-          <Field label="Segundo Despertar"><textarea v-model="f.segundo_despertar" rows="3" /></Field>
-          <Field label="Debilidades"><textarea v-model="f.debilidades" rows="3" /></Field>
+          <div class="f-group"><label class="f-lbl">Circuito Forte</label><textarea class="f-area" v-model="f.circuito_forte" rows="3"></textarea></div>
+          <div class="f-group"><label class="f-lbl">Essentia</label><textarea class="f-area" v-model="f.essentia" rows="3"></textarea></div>
+          <div class="f-group"><label class="f-lbl">Zenithra</label><textarea class="f-area" v-model="f.zenithra" rows="3"></textarea></div>
+          <div class="f-group"><label class="f-lbl">Bendición</label><textarea class="f-area" v-model="f.bendicion" rows="3"></textarea></div>
+          <div class="f-group"><label class="f-lbl">Segundo Despertar</label><textarea class="f-area" v-model="f.segundo_despertar" rows="3"></textarea></div>
+          <div class="f-group"><label class="f-lbl">Debilidades</label><textarea class="f-area" v-model="f.debilidades" rows="3"></textarea></div>
         </div>
       </div>
 
@@ -181,22 +232,24 @@
           <div v-for="(hab, i) in habilidades" :key="i" class="dyn-item">
             <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="habilidades.splice(i,1)">✕</button>
             <p class="dyn-num">Habilidad #{{ i + 1 }}</p>
-            <Field label="Vincular al catálogo de magia (opcional)">
-              <select v-model="hab.magia_fundamento_id">
+            <div class="f-group">
+              <label class="f-lbl">Vincular al catálogo de magia (opcional)</label>
+              <select class="f-inp" v-model="hab.magia_fundamento_id">
                 <option value="">— Habilidad personalizada —</option>
                 <option v-for="m in cats.magia" :key="m.id" :value="m.id">
                   [{{ m.categoria }}{{ m.subcategoria ? ` / ${m.subcategoria}` : '' }}] {{ m.nombre }}
                 </option>
               </select>
-            </Field>
+            </div>
             <div v-if="hab.magia_fundamento_id" class="magia-preview">
               {{ magiaPreview(hab.magia_fundamento_id) }}
             </div>
             <template v-if="!hab.magia_fundamento_id">
               <div class="row3">
-                <Field label="Nombre"><input v-model="hab.nombre" /></Field>
-                <Field label="Categoría">
-                  <select v-model="hab.categoria">
+                <div class="f-group"><label class="f-lbl">Nombre</label><input class="f-inp" v-model="hab.nombre" /></div>
+                <div class="f-group">
+                  <label class="f-lbl">Categoría</label>
+                  <select class="f-inp" v-model="hab.categoria">
                     <option value="TECNICA">Técnica</option>
                     <option value="TECNICA_AVANZADA">Técnica Avanzada</option>
                     <option value="HABILIDAD_MAGICA">Habilidad Mágica</option>
@@ -204,21 +257,23 @@
                     <option value="RASGO">Rasgo</option>
                     <option value="CONOCIMIENTO">Conocimiento</option>
                   </select>
-                </Field>
-                <Field label="Tipo">
-                  <select v-model="hab.tipo">
+                </div>
+                <div class="f-group">
+                  <label class="f-lbl">Tipo</label>
+                  <select class="f-inp" v-model="hab.tipo">
                     <option value="basica">Básica</option>
                     <option value="avanzada">Avanzada</option>
                     <option value="magica">Mágica</option>
                     <option value="no_magica">No Mágica</option>
                   </select>
-                </Field>
+                </div>
               </div>
             </template>
-            <Field :label="hab.magia_fundamento_id ? 'Notas del personaje' : 'Descripción / Nivel de dominio'">
-              <textarea v-model="hab.descripcion" rows="3"
-                :placeholder="hab.magia_fundamento_id ? 'Nivel de maestría, variaciones propias...' : 'Describe la habilidad...'" />
-            </Field>
+            <div class="f-group">
+              <label class="f-lbl">{{ hab.magia_fundamento_id ? 'Notas del personaje' : 'Descripción / Nivel de dominio' }}</label>
+              <textarea class="f-area" v-model="hab.descripcion" rows="3"
+                :placeholder="hab.magia_fundamento_id ? 'Nivel de maestría, variaciones propias...' : 'Describe la habilidad...'"></textarea>
+            </div>
           </div>
           <button class="btn-add" @click="habilidades.push({ nombre:'', categoria:'TECNICA', tipo:'basica', descripcion:'', magia_fundamento_id:'' })">
             + Agregar Habilidad
@@ -235,19 +290,20 @@
             <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="equipamiento.splice(i,1)">✕</button>
             <p class="dyn-num">Item #{{ i + 1 }}</p>
             <div class="row2">
-              <Field label="Nombre"><input v-model="item.nombre" /></Field>
-              <Field label="Tipo">
-                <select v-model="item.tipo">
+              <div class="f-group"><label class="f-lbl">Nombre</label><input class="f-inp" v-model="item.nombre" /></div>
+              <div class="f-group">
+                <label class="f-lbl">Tipo</label>
+                <select class="f-inp" v-model="item.tipo">
                   <option value="">—</option>
                   <option value="Arma">Arma</option>
                   <option value="Objeto_magico">Objeto Mágico</option>
                   <option value="Objeto_Importante">Objeto Importante</option>
                   <option value="Familiares">Familiar / Compañero</option>
                 </select>
-              </Field>
+              </div>
             </div>
-            <Field label="Descripción"><textarea v-model="item.descripcion" rows="3" /></Field>
-            <Field label="Poder Especial"><textarea v-model="item.poder_especial" rows="2" /></Field>
+            <div class="f-group"><label class="f-lbl">Descripción</label><textarea class="f-area" v-model="item.descripcion" rows="3"></textarea></div>
+            <div class="f-group"><label class="f-lbl">Poder Especial</label><textarea class="f-area" v-model="item.poder_especial" rows="2"></textarea></div>
           </div>
           <button class="btn-add" @click="equipamiento.push({ nombre:'', tipo:'', descripcion:'', poder_especial:'' })">
             + Agregar Item
@@ -264,16 +320,17 @@
             <div v-for="(o, i) in objetos" :key="o.id_objeto || i" class="dyn-item">
               <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="eliminarObjeto(i)">✕</button>
               <div class="row2">
-                <Field label="Nombre"><input v-model="o.nombre" /></Field>
-                <Field label="Tipo">
-                  <select v-model="o.tipo">
+                <div class="f-group"><label class="f-lbl">Nombre</label><input class="f-inp" v-model="o.nombre" /></div>
+                <div class="f-group">
+                  <label class="f-lbl">Tipo</label>
+                  <select class="f-inp" v-model="o.tipo">
                     <option value="">— Sin tipo —</option>
                     <option>Reliquia</option><option>Artefacto</option><option>Recuerdo</option>
                     <option>Herramienta</option><option>Símbolo</option><option>Otro</option>
                   </select>
-                </Field>
+                </div>
               </div>
-              <Field label="Descripción"><textarea v-model="o.descripcion" rows="3" /></Field>
+              <div class="f-group"><label class="f-lbl">Descripción</label><textarea class="f-area" v-model="o.descripcion" rows="3"></textarea></div>
               <button class="btn-rel-add" :disabled="!o.nombre?.trim()" @click="guardarObjeto(i)">
                 {{ o.id_objeto ? 'Actualizar' : 'Guardar objeto' }}
               </button>
@@ -293,13 +350,15 @@
           <div v-for="(rel, i) in relaciones" :key="i" class="dyn-item">
             <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="relaciones.splice(i,1)">✕</button>
             <p class="dyn-num">Relación #{{ i + 1 }}</p>
-            <Field label="Nombre (personaje u organización)">
-              <input v-model="rel.nombre_pj_organizacion" placeholder="Ej: Alhaitham, Orden del Crepúsculo..." />
-            </Field>
+            <div class="f-group">
+              <label class="f-lbl">Nombre (personaje u organización)</label>
+              <input class="f-inp" v-model="rel.nombre_pj_organizacion" placeholder="Ej: Alhaitham, Orden del Crepúsculo..." />
+            </div>
             <div class="row3">
-              <Field label="Tipo relación"><input v-model="rel.tipo_relacion" placeholder="Rival, Mentor, Aliado..." /></Field>
-              <Field label="Subtipo">
-                <select v-model="rel.subtipo_relacion">
+              <div class="f-group"><label class="f-lbl">Tipo relación</label><input class="f-inp" v-model="rel.tipo_relacion" placeholder="Rival, Mentor, Aliado..." /></div>
+              <div class="f-group">
+                <label class="f-lbl">Subtipo</label>
+                <select class="f-inp" v-model="rel.subtipo_relacion">
                   <option value="otro">Otro</option>
                   <option value="amigo">Amigo</option>
                   <option value="enemigo">Enemigo</option>
@@ -308,17 +367,18 @@
                   <option value="organizacion_propia">Org. Propia</option>
                   <option value="organizacion_externa">Org. Externa</option>
                 </select>
-              </Field>
-              <Field label="Vincular personaje (opcional)">
-                <select v-model.number="rel.personaje_relacionado_id">
+              </div>
+              <div class="f-group">
+                <label class="f-lbl">Vincular personaje (opcional)</label>
+                <select class="f-inp" v-model.number="rel.personaje_relacionado_id">
                   <option :value="null">— Sin vínculo —</option>
                   <option v-for="p in cats.personajes" :key="p.id" :value="p.id">
                     {{ p.nombre }}{{ p.surname ? ' ' + p.surname : '' }}
                   </option>
                 </select>
-              </Field>
+              </div>
             </div>
-            <Field label="Descripción"><textarea v-model="rel.descripcion" rows="3" /></Field>
+            <div class="f-group"><label class="f-lbl">Descripción</label><textarea class="f-area" v-model="rel.descripcion" rows="3"></textarea></div>
           </div>
           <button class="btn-add" @click="relaciones.push({ nombre_pj_organizacion:'', tipo_relacion:'', subtipo_relacion:'otro', descripcion:'', personaje_relacionado_id: null })">
             + Agregar Relación
@@ -375,7 +435,7 @@
           <div v-if="!cancionesPj.length" class="hint">Sin canciones asignadas.</div>
           <div v-for="(c, i) in cancionesPj" :key="c.cancion_id" class="rel-row">
             <span class="rel-name">{{ c.titulo }}</span>
-            <span v-if="c.artista" style="color:#5a4a30;font-size:0.9rem">{{ c.artista }}</span>
+            <span v-if="c.artista" style="color: var(--t3); font-size:0.9rem">{{ c.artista }}</span>
             <input v-model="c.contexto" placeholder="Contexto..." class="rel-input" style="width:180px" />
             <button class="rel-remove" @click="cancionesPj.splice(i,1)">✕</button>
           </div>
@@ -390,13 +450,14 @@
           <div v-for="(n, i) in naciones" :key="i" class="dyn-item">
             <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="naciones.splice(i,1)">✕</button>
             <div class="row2">
-              <Field label="Nación">
-                <select v-model.number="n.nacion_id">
+              <div class="f-group">
+                <label class="f-lbl">Nación</label>
+                <select class="f-inp" v-model.number="n.nacion_id">
                   <option value="">— Seleccionar —</option>
                   <option v-for="x in cats.naciones" :key="x.id" :value="x.id">{{ x.nombre }}</option>
                 </select>
-              </Field>
-              <Field label="Tipo de vínculo"><input v-model="n.tipo" placeholder="Nacimiento, Residencia..." /></Field>
+              </div>
+              <div class="f-group"><label class="f-lbl">Tipo de vínculo</label><input class="f-inp" v-model="n.tipo" placeholder="Nacimiento, Residencia..." /></div>
             </div>
           </div>
           <button class="btn-add" @click="naciones.push({ nacion_id:'', tipo:'Residencia', descripcion:'' })">+ Agregar Nación</button>
@@ -407,18 +468,20 @@
           <div v-for="(r, i) in razas" :key="i" class="dyn-item">
             <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="razas.splice(i,1)">✕</button>
             <div class="row3">
-              <Field label="Raza">
-                <select v-model.number="r.raza_id">
+              <div class="f-group">
+                <label class="f-lbl">Raza</label>
+                <select class="f-inp" v-model.number="r.raza_id">
                   <option value="">— Seleccionar —</option>
                   <option v-for="x in cats.razas" :key="x.id" :value="x.id">{{ x.nombre }}</option>
                 </select>
-              </Field>
-              <Field label="¿Mixta?">
-                <select v-model="r.es_mixta">
+              </div>
+              <div class="f-group">
+                <label class="f-lbl">¿Mixta?</label>
+                <select class="f-inp" v-model="r.es_mixta">
                   <option :value="false">No</option><option :value="true">Sí</option>
                 </select>
-              </Field>
-              <Field label="Nota"><input v-model="r.nota" placeholder="Ej: Mitad elfo por madre" /></Field>
+              </div>
+              <div class="f-group"><label class="f-lbl">Nota</label><input class="f-inp" v-model="r.nota" placeholder="Ej: Mitad elfo por madre" /></div>
             </div>
           </div>
           <button class="btn-add" @click="razas.push({ raza_id:'', es_mixta:false, nota:'' })">+ Agregar Raza</button>
@@ -429,13 +492,14 @@
           <div v-for="(o, i) in organizaciones" :key="i" class="dyn-item">
             <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="organizaciones.splice(i,1)">✕</button>
             <div class="row2">
-              <Field label="Organización">
-                <select v-model.number="o.organizacion_id">
+              <div class="f-group">
+                <label class="f-lbl">Organización</label>
+                <select class="f-inp" v-model.number="o.organizacion_id">
                   <option value="">— Seleccionar —</option>
                   <option v-for="x in cats.orgs" :key="x.id" :value="x.id">{{ x.nombre }}</option>
                 </select>
-              </Field>
-              <Field label="Rol / Tipo"><input v-model="o.tipo" placeholder="Miembro, Líder..." /></Field>
+              </div>
+              <div class="f-group"><label class="f-lbl">Rol / Tipo</label><input class="f-inp" v-model="o.tipo" placeholder="Miembro, Líder..." /></div>
             </div>
           </div>
           <button class="btn-add" @click="organizaciones.push({ organizacion_id:'', tipo:'Miembro', descripcion:'' })">+ Agregar Organización</button>
@@ -450,10 +514,10 @@
             <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="eventos.splice(i,1)">✕</button>
             <p class="dyn-num">Evento #{{ i + 1 }}</p>
             <div class="row2">
-              <Field label="Fecha"><input v-model="e.fecha" placeholder="Ej: Año 1520" /></Field>
-              <Field label="Título"><input v-model="e.titulo" /></Field>
+              <div class="f-group"><label class="f-lbl">Fecha</label><input class="f-inp" v-model="e.fecha" placeholder="Ej: Año 1520" /></div>
+              <div class="f-group"><label class="f-lbl">Título</label><input class="f-inp" v-model="e.titulo" /></div>
             </div>
-            <Field label="Descripción"><textarea v-model="e.descripcion" rows="3" /></Field>
+            <div class="f-group"><label class="f-lbl">Descripción</label><textarea class="f-area" v-model="e.descripcion" rows="3"></textarea></div>
           </div>
           <button class="btn-add" @click="eventos.push({ fecha:'', titulo:'', descripcion:'' })">+ Agregar Evento</button>
         </div>
@@ -465,9 +529,10 @@
           <div class="sec-title">Atributos</div>
           <div class="stats-with-chart">
             <div class="stats-grid">
-              <Field v-for="s in STAT_FIELDS" :key="s.key" :label="s.label">
-                <input type="number" :min="s.min" :max="s.max" v-model.number="stats[s.key]" />
-              </Field>
+              <div v-for="s in STAT_FIELDS" :key="s.key" class="f-group">
+                <label class="f-lbl">{{ s.label }}</label>
+                <input class="f-inp" type="number" :min="s.min" :max="s.max" v-model.number="stats[s.key]" />
+              </div>
             </div>
             <div class="radar-wrap">
               <Radar :data="radarData" :options="radarOptions" />
@@ -477,12 +542,13 @@
         <div class="section">
           <div class="sec-title">Rangos de Combate</div>
           <div class="stats-grid">
-            <Field v-for="r in RANGO_FIELDS" :key="r.key" :label="r.label">
-              <select v-model="stats[r.key]">
+            <div v-for="r in RANGO_FIELDS" :key="r.key" class="f-group">
+              <label class="f-lbl">{{ r.label }}</label>
+              <select class="f-inp" v-model="stats[r.key]">
                 <option value="">—</option>
                 <option>S</option><option>A</option><option>B</option><option>C</option><option>D</option>
               </select>
-            </Field>
+            </div>
           </div>
         </div>
       </div>
@@ -493,10 +559,11 @@
         <p class="hint" style="margin-bottom:20px">Esta información nunca es visible para los lectores.</p>
 
         <div class="section">
-          <div class="sec-title" style="color:#c8a84b">Estado Narrativo</div>
+          <div class="sec-title" style="color: var(--accent)">Estado Narrativo</div>
           <div class="row2">
-            <Field label="Estado Narrativo">
-              <select v-model="narrativa.estado_narrativo">
+            <div class="f-group">
+              <label class="f-lbl">Estado Narrativo</label>
+              <select class="f-inp" v-model="narrativa.estado_narrativo">
                 <option value="Vivo">🟢 Vivo</option>
                 <option value="Muerto">🔴 Muerto</option>
                 <option value="Desaparecido">🟡 Desaparecido</option>
@@ -507,9 +574,10 @@
                 <option value="Corrompido">☠️ Corrompido</option>
                 <option value="Desconocido">⬛ Desconocido</option>
               </select>
-            </Field>
-            <Field label="Tipo de Arco">
-              <select v-model="narrativa.tipo_arco">
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Tipo de Arco</label>
+              <select class="f-inp" v-model="narrativa.tipo_arco">
                 <option value="">— Sin definir —</option>
                 <option value="Redencion">Redención</option>
                 <option value="Caida">Caída</option>
@@ -521,34 +589,37 @@
                 <option value="Revelacion">Revelación</option>
                 <option value="Neutral">Neutral</option>
               </select>
-            </Field>
+            </div>
           </div>
-          <Field :label="`Narrativa definida — ${narrativa.porcentaje_escrito}%`">
+          <div class="f-group">
+            <label class="f-lbl">Narrativa definida — {{ narrativa.porcentaje_escrito }}%</label>
             <div style="display:flex;align-items:center;gap:12px">
               <div class="pct-bar-bg"><div class="pct-bar-fill" :style="`width:${narrativa.porcentaje_escrito}%`"></div></div>
-              <input type="number" min="0" max="100" v-model.number="narrativa.porcentaje_escrito" style="width:70px;text-align:center" />
+              <input class="f-inp" type="number" min="0" max="100" v-model.number="narrativa.porcentaje_escrito" style="width:70px;text-align:center" />
             </div>
-          </Field>
+          </div>
           <div class="row2">
-            <Field label="Acto Clave">
-              <select v-model="narrativa.acto_clave_id">
+            <div class="f-group">
+              <label class="f-lbl">Acto Clave</label>
+              <select class="f-inp" v-model="narrativa.acto_clave_id">
                 <option :value="null">— Sin asignar —</option>
                 <option v-for="a in cats.actos" :key="a.id" :value="a.id">{{ a.nombre }}</option>
               </select>
-            </Field>
-            <Field label="Capítulo Clave">
-              <select v-model="narrativa.capitulo_clave_id">
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Capítulo Clave</label>
+              <select class="f-inp" v-model="narrativa.capitulo_clave_id">
                 <option :value="null">— Sin asignar —</option>
                 <option v-for="c in cats.capitulos" :key="c.id" :value="c.id">Cap. {{ c.numero }} — {{ c.titulo }}</option>
               </select>
-            </Field>
+            </div>
           </div>
-          <Field label="Desarrollo del Arco"><textarea v-model="narrativa.desarrollo_arco" rows="4" /></Field>
-          <Field label="Destino Final"><textarea v-model="narrativa.destino_final" rows="4" /></Field>
-          <Field label="Secretos Pendientes"><textarea v-model="narrativa.secretos_pendientes" rows="3" /></Field>
-          <Field label="Revelación de Identidad"><textarea v-model="narrativa.revelacion_identidad" rows="3" /></Field>
-          <Field label="Relaciones Ocultas"><textarea v-model="narrativa.relaciones_ocultas" rows="3" /></Field>
-          <Field label="Notas del Autor"><textarea v-model="narrativa.notas_autor" rows="4" /></Field>
+          <div class="f-group"><label class="f-lbl">Desarrollo del Arco</label><textarea class="f-area" v-model="narrativa.desarrollo_arco" rows="4"></textarea></div>
+          <div class="f-group"><label class="f-lbl">Destino Final</label><textarea class="f-area" v-model="narrativa.destino_final" rows="4"></textarea></div>
+          <div class="f-group"><label class="f-lbl">Secretos Pendientes</label><textarea class="f-area" v-model="narrativa.secretos_pendientes" rows="3"></textarea></div>
+          <div class="f-group"><label class="f-lbl">Revelación de Identidad</label><textarea class="f-area" v-model="narrativa.revelacion_identidad" rows="3"></textarea></div>
+          <div class="f-group"><label class="f-lbl">Relaciones Ocultas</label><textarea class="f-area" v-model="narrativa.relaciones_ocultas" rows="3"></textarea></div>
+          <div class="f-group"><label class="f-lbl">Notas del Autor</label><textarea class="f-area" v-model="narrativa.notas_autor" rows="4"></textarea></div>
           <div style="display:flex;align-items:center;gap:12px;margin-top:8px">
             <button class="btn-save" :disabled="savingNarr || !isEdit" @click="guardarNarrativa">
               {{ savingNarr ? 'Guardando...' : 'Guardar Narrativa' }}
@@ -561,7 +632,7 @@
         <!-- Hitos -->
         <div class="section">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-            <div class="sec-title" style="color:#c8a84b;margin-bottom:0">Hitos Narrativos</div>
+            <div class="sec-title" style="color: var(--accent); margin-bottom:0">Hitos Narrativos</div>
             <button class="btn-add" style="width:auto;padding:6px 16px" @click="mostrarFormHito = !mostrarFormHito">+ Hito</button>
           </div>
           <p v-if="!hitos.length" class="hint">Sin hitos registrados.</p>
@@ -569,15 +640,16 @@
             <div>
               <div class="hito-titulo">{{ tipoHitoIcon(h.tipo_hito) }} {{ h.titulo }}</div>
               <span class="rel-tag" style="margin-top:4px;display:inline-block">{{ h.tipo_hito }}</span>
-              <p v-if="h.descripcion" style="color:#5a4a30;font-size:0.85rem;margin-top:4px">{{ h.descripcion }}</p>
+              <p v-if="h.descripcion" style="color: var(--t3); font-size:0.85rem; margin-top:4px">{{ h.descripcion }}</p>
             </div>
             <button class="rel-remove" @click="eliminarHito(h.id)">✕</button>
           </div>
           <div v-if="mostrarFormHito" class="dyn-item" style="margin-top:12px">
             <div class="row2">
-              <Field label="Título *"><input v-model="nuevoHito.titulo" /></Field>
-              <Field label="Tipo">
-                <select v-model="nuevoHito.tipo_hito">
+              <div class="f-group"><label class="f-lbl">Título *</label><input class="f-inp" v-model="nuevoHito.titulo" /></div>
+              <div class="f-group">
+                <label class="f-lbl">Tipo</label>
+                <select class="f-inp" v-model="nuevoHito.tipo_hito">
                   <option value="Otro">Otro</option>
                   <option value="Revelacion">Revelación</option>
                   <option value="Muerte">Muerte</option>
@@ -588,23 +660,25 @@
                   <option value="Sacrificio">Sacrificio</option>
                   <option value="Despertar">Despertar</option>
                 </select>
-              </Field>
+              </div>
             </div>
             <div class="row2">
-              <Field label="Acto vinculado">
-                <select v-model="nuevoHito.acto_id">
+              <div class="f-group">
+                <label class="f-lbl">Acto vinculado</label>
+                <select class="f-inp" v-model="nuevoHito.acto_id">
                   <option :value="null">—</option>
                   <option v-for="a in cats.actos" :key="a.id" :value="a.id">{{ a.nombre }}</option>
                 </select>
-              </Field>
-              <Field label="Capítulo vinculado">
-                <select v-model="nuevoHito.capitulo_id">
+              </div>
+              <div class="f-group">
+                <label class="f-lbl">Capítulo vinculado</label>
+                <select class="f-inp" v-model="nuevoHito.capitulo_id">
                   <option :value="null">—</option>
                   <option v-for="c in cats.capitulos" :key="c.id" :value="c.id">Cap. {{ c.numero }} — {{ c.titulo }}</option>
                 </select>
-              </Field>
+              </div>
             </div>
-            <Field label="Descripción"><textarea v-model="nuevoHito.descripcion" rows="3" /></Field>
+            <div class="f-group"><label class="f-lbl">Descripción</label><textarea class="f-area" v-model="nuevoHito.descripcion" rows="3"></textarea></div>
             <div style="display:flex;gap:8px">
               <button class="btn-rel-add" @click="guardarHito">Guardar Hito</button>
               <button class="btn-back" @click="mostrarFormHito = false">Cancelar</button>
@@ -630,6 +704,8 @@ const route    = useRoute()
 const id     = computed(() => route.params.id === 'nuevo' ? null : route.params.id)
 const isEdit = computed(() => !!id.value)
 const tab    = ref('basico')
+const tabsEl = ref(null)
+function scrollTabs(dir) { tabsEl.value?.scrollBy({ left: dir * 220, behavior: 'smooth' }) }
 const loading  = ref(false)
 const saving   = ref(false)
 const error    = ref('')
@@ -678,9 +754,9 @@ const radarData = computed(() => ({
       stats.value.sabiduria      || 0,
       stats.value.carisma        || 0,
     ],
-    backgroundColor: 'rgba(200,168,75,0.15)',
-    borderColor:     '#c8a84b',
-    pointBackgroundColor: '#c8a84b',
+    backgroundColor: 'rgba(196,32,64,0.12)',
+    borderColor:     '#c42040',
+    pointBackgroundColor: '#c42040',
     borderWidth: 1.5,
   }],
 }))
@@ -688,10 +764,10 @@ const radarOptions = {
   responsive: true,
   scales: {
     r: {
-      min: 0, max: 10, ticks: { stepSize: 2, color: '#3a2a10', font: { size: 9 }, backdropColor: 'transparent' },
-      grid: { color: '#2a2010' },
-      angleLines: { color: '#2a2010' },
-      pointLabels: { color: '#7a6a50', font: { size: 10 } },
+      min: 0, max: 10, ticks: { stepSize: 2, color: '#44406a', font: { size: 9 }, backdropColor: 'transparent' },
+      grid: { color: '#1e1a36' },
+      angleLines: { color: '#1e1a36' },
+      pointLabels: { color: '#44406a', font: { size: 10 } },
     },
   },
   plugins: { legend: { display: false } },
@@ -1043,48 +1119,161 @@ function tipoHitoIcon(tipo) {
 <style scoped src="~/assets/css/admin-form.css" />
 <style scoped src="~/assets/css/admin-relations.css" />
 <style scoped>
+/* ── Tabs nav ── */
+.tabs-wrap {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--bd-strong);
+}
+.tabs-arrow {
+  background: transparent;
+  border: none;
+  color: var(--t3);
+  font-size: 20px;
+  padding: 0 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 160ms;
+  line-height: 1;
+}
+.tabs-arrow:hover { color: var(--t2); }
 .inner-tabs {
   display: flex;
-  gap: 2px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid #2a2010;
+  gap: 0;
   overflow-x: auto;
   scrollbar-width: none;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  flex: 1;
 }
 .inner-tabs::-webkit-scrollbar { display: none; }
 .inner-tab {
   font-family: 'Cinzel', serif;
-  font-size: 9px;
-  letter-spacing: 0.1em;
+  font-size: 13px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 10px 12px;
+  padding: 12px 16px;
   background: transparent;
   border: none;
-  color: #4a3a20;
+  color: var(--t2);
   cursor: pointer;
   border-bottom: 2px solid transparent;
   white-space: nowrap;
-  transition: color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+  transition: color 180ms var(--ease-out), border-color 180ms var(--ease-out), background 180ms ease;
   margin-bottom: -1px;
 }
-.inner-tab:hover { color: #a89070; }
-.inner-tab.active { color: #c8a84b; border-bottom-color: #c8a84b; }
-.inner-tab.autor { color: #7a6a50; }
-.inner-tab.autor.active { color: #c8a84b; }
+@media (hover: hover) and (pointer: fine) {
+  .inner-tab:hover { color: var(--t2); background: rgba(255,255,255,0.025); }
+}
+.inner-tab.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(196,32,64,0.06); }
+.inner-tab.autor { color: var(--t3); }
+.inner-tab.autor.active { color: var(--accent); }
 
-.dyn-num { font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.1em; color:#4a3a20; margin-bottom:8px; text-transform:uppercase; }
-.magia-preview { background:#0a0804; border:1px solid #2a2010; padding:8px 12px; font-size:0.85rem; color:#c8a84b; margin-bottom:12px; border-radius:2px; }
+.dyn-num { font-family:'Cinzel',serif; font-size:11px; letter-spacing:0.1em; color:var(--accent); margin-bottom:10px; text-transform:uppercase; }
+.magia-preview { background:var(--bg); border:1px solid var(--bd); padding:8px 12px; font-size:0.85rem; color:var(--accent); margin-bottom:12px; border-radius:2px; }
 .stats-with-chart { display:grid; grid-template-columns:1fr 240px; gap:20px; align-items:start; }
 @media (max-width:700px) { .stats-with-chart { grid-template-columns:1fr; } }
-.radar-wrap { background:#0e0b07; border:1px solid #2a2010; border-radius:4px; padding:14px; }
+.radar-wrap { background:var(--s1); border:1px solid var(--bd); border-radius:4px; padding:14px; }
 .stats-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:10px; }
-.afil-row { display:flex; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid #1a1408; }
-.autor-badge { background:rgba(200,168,75,0.1); border:1px solid rgba(200,168,75,0.3); color:#c8a84b; padding:4px 14px; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.12em; display:inline-block; margin-bottom:8px; }
-.pct-bar-bg { flex:1; height:6px; background:#1e1810; border-radius:3px; overflow:hidden; }
-.pct-bar-fill { height:100%; background:linear-gradient(to right, #c8a84b, #e24b4a); transition:width 0.3s; border-radius:3px; }
-.hito-card { background:#0e0b07; border:1px solid #2a2010; border-left:3px solid #c8a84b40; padding:12px 16px; display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; border-radius:2px; }
-.hito-titulo { font-family:'Cinzel',serif; font-size:0.85rem; color:#e8dfc8; }
-.btn-edit { font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.1em; padding:5px 12px; border:1px solid #2a2010; color:#7a6a50; text-decoration:none; border-radius:2px; transition:border-color 0.2s, color 0.2s; }
-.btn-edit:hover { border-color:#c8a84b; color:#c8a84b; }
+.afil-row { display:flex; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid var(--bd); }
+.autor-badge { background:var(--accent-dim); border:1px solid rgba(196,32,64,0.3); color:var(--accent); padding:5px 14px; font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.12em; display:inline-block; margin-bottom:10px; }
+.pct-bar-bg { flex:1; height:6px; background:var(--bd); border-radius:3px; overflow:hidden; }
+.pct-bar-fill { height:100%; background:linear-gradient(to right, rgba(196,32,64,0.5), var(--accent)); transition:width 0.3s var(--ease-out); border-radius:3px; }
+.hito-card { background:var(--s1); border:1px solid var(--bd); border-left:3px solid rgba(196,32,64,0.3); padding:12px 16px; display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; border-radius:2px; transition:border-color 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .hito-card:hover { border-color:var(--bd-strong); border-left-color:rgba(196,32,64,0.55); } }
+.hito-titulo { font-family:'Cinzel',serif; font-size:0.85rem; color:var(--t1); }
+.btn-edit { font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.1em; padding:5px 12px; border:1px solid var(--bd); color:var(--t3); text-decoration:none; border-radius:2px; transition:border-color 180ms var(--ease-out), color 180ms var(--ease-out); }
+.btn-edit:hover { border-color:var(--accent); color:var(--accent); }
+
+/* ── Row helpers (all tabs) ── */
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+@media (max-width: 600px) { .row2, .row3 { grid-template-columns: 1fr; } }
+
+/* ── f-group spacing ── */
+.f-group { margin-bottom: 16px; }
+.row2 .f-group, .row3 .f-group, .basico-grid .f-group { margin-bottom: 0; }
+
+/* ── Textarea ── */
+.f-area {
+  background: var(--bg);
+  border: 1px solid var(--bd-strong);
+  border-radius: 2px;
+  color: var(--t1);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 1rem;
+  padding: 10px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  resize: vertical;
+  color-scheme: dark;
+  transition: border-color 160ms, box-shadow 160ms;
+}
+.f-area:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+/* ── BÁSICO: 6-column grid (LCM of 2 and 3) ── */
+.basico-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+.col-half  { grid-column: span 3; }
+.col-full  { grid-column: span 6; }
+.col-third { grid-column: span 2; }
+.f-group { display: flex; flex-direction: column; }
+.f-lbl {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--t2);
+  display: block;
+  margin-bottom: 6px;
+}
+.f-inp {
+  background: var(--bg);
+  border: 1px solid var(--bd-strong);
+  border-radius: 2px;
+  color: var(--t1);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 1rem;
+  height: 42px;
+  padding: 10px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  color-scheme: dark;
+  transition: border-color 160ms, box-shadow 160ms;
+}
+.f-inp:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+.check-row { display: flex; flex-direction: column; }
+@media (max-width: 640px) {
+  .basico-grid { grid-template-columns: 1fr; }
+  .col-half, .col-full, .col-third { grid-column: span 1; }
+}
+
+/* ── Sidebar image URL fields ── */
+.img-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.img-hint {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.8rem;
+  color: var(--t3);
+  font-style: italic;
+  line-height: 1.4;
+}
 </style>

@@ -135,37 +135,137 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.page-header { text-align:center; padding:2rem 0 1.5rem; border-bottom:1px solid #1e1810; margin-bottom:1.5rem; }
-.eyebrow { font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.35em; color:#c8a84b; opacity:0.7; text-transform:uppercase; margin-bottom:0.5rem; }
-.page-title { font-family:'Cinzel',serif; font-size:clamp(1.6rem,4vw,2.2rem); font-weight:700; color:#f0e4c0; letter-spacing:0.08em; }
-.divider { display:flex; align-items:center; justify-content:center; gap:10px; margin-top:1rem; }
-.line { height:1px; width:50px; background:linear-gradient(90deg,transparent,#c8a84b); }
-.line.right { background:linear-gradient(90deg,#c8a84b,transparent); }
-.gem { width:6px; height:6px; background:#c8a84b; transform:rotate(45deg); }
-.welcome { margin-top:0.75rem; font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.2em; color:#3a2a10; }
+.page-header {
+  padding: 2rem 0 1.5rem;
+  border-bottom: 1px solid var(--bd);
+  margin-bottom: 1.5rem;
+}
+.eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  color: var(--t3);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 300;
+  color: var(--t1);
+  letter-spacing: -0.01em;
+}
+.divider { display: none; }
+.welcome {
+  margin-top: 0.5rem;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--t3);
+  opacity: 0.6;
+}
 
 /* Stats */
-.stats-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1.5rem; }
-.stat-chip { background:#12100a; border:1px solid #2a2010; border-radius:3px; padding:12px 16px; text-align:center; min-width:90px; flex:1; }
-.stat-num  { font-family:'Cinzel',serif; font-size:1.6rem; font-weight:700; color:#c8a84b; transition:opacity 0.3s; }
-.stat-num.loading { opacity: 0.3; }
-.stat-label { font-family:'Cinzel',serif; font-size:8px; letter-spacing:0.15em; color:#4a3a20; text-transform:uppercase; margin-top:4px; }
+.stats-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.stat-chip {
+  background: var(--s1);
+  border: 1px solid var(--bd);
+  border-radius: 2px;
+  padding: 12px 16px;
+  text-align: center;
+  min-width: 90px;
+  flex: 1;
+}
+.stat-num {
+  font-family: 'Cinzel', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent);
+  transition: opacity 0.3s;
+}
+.stat-num.loading { opacity: 0.2; }
+.stat-label {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: var(--t3);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
 
 /* Special cards */
-.special-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:8px; margin-bottom:1.5rem; }
-.special-card { background:#12100a; border:1px solid #2a2010; border-radius:3px; padding:14px 16px; display:flex; align-items:center; gap:12px; text-decoration:none; transition:border-color 0.2s, background 0.2s; }
-.special-card:hover { border-color:#c8a84b; background:#16120c; }
-.special-icon  { font-size:1.3rem; flex-shrink:0; }
-.special-title { font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.12em; color:#e8dfc8; }
-.special-sub   { font-family:'Crimson Pro',serif; font-size:0.82rem; color:#4a3a20; margin-top:2px; }
-.special-arrow { color:#2a2010; margin-left:auto; transition:color 0.2s, transform 0.2s; }
-.special-card:hover .special-arrow { color:#c8a84b; transform:translateX(3px); }
+.special-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+.special-card {
+  background: var(--s1);
+  border: 1px solid var(--bd);
+  border-radius: 2px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: border-color 180ms var(--ease-out), background 180ms ease;
+}
+.special-card:hover { border-color: var(--accent); background: var(--s2); }
+.special-icon { font-size: 1.3rem; flex-shrink: 0; }
+.special-title {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--t1);
+  text-transform: uppercase;
+}
+.special-sub {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.82rem;
+  color: var(--t3);
+  margin-top: 2px;
+}
+.special-arrow {
+  color: var(--t3);
+  margin-left: auto;
+  transition: color 180ms ease, transform 220ms var(--ease-out);
+}
+.special-card:hover .special-arrow { color: var(--accent); transform: translateX(3px); }
 
 /* Sections grid */
-.sections-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:8px; }
-.section-card { background:#12100a; border:1px solid #2a2010; border-radius:3px; padding:1rem 0.75rem; display:flex; flex-direction:column; align-items:center; gap:6px; text-decoration:none; transition:border-color 0.2s, background 0.2s, transform 0.2s; }
-.section-card:hover { border-color:#c8a84b; background:#16120c; transform:translateY(-2px); }
-.section-icon  { font-size:1.3rem; }
-.section-label { font-family:'Cinzel',serif; font-size:8px; letter-spacing:0.12em; text-transform:uppercase; color:#5a4a30; text-align:center; }
-.section-count { font-family:'Cinzel',serif; font-size:10px; color:#3a2a10; }
+.sections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+}
+.section-card {
+  background: var(--s1);
+  border: 1px solid var(--bd);
+  border-radius: 2px;
+  padding: 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: border-color 180ms var(--ease-out), background 180ms ease, transform 220ms var(--ease-out);
+}
+.section-card:hover { border-color: var(--accent); background: var(--s2); transform: translateY(-2px); }
+.section-icon { font-size: 1.3rem; }
+.section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--t3);
+  text-align: center;
+}
+.section-count {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  color: var(--t3);
+  opacity: 0.6;
+}
 </style>

@@ -1,13 +1,8 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <p class="eyebrow">Archivo del mundo</p>
+      <span class="page-eyebrow">Archivo del mundo</span>
       <h1 class="page-title">Personajes</h1>
-      <div class="divider">
-        <div class="line"></div>
-        <div class="gem"></div>
-        <div class="line right"></div>
-      </div>
     </div>
 
     <div class="filters">
@@ -33,7 +28,7 @@
         <div class="card-info">
           <span class="name">{{ p.nombre }} <span v-if="p.surname" class="surname">{{ p.surname }}</span></span>
           <span v-if="p.titulo" class="titulo">{{ p.titulo }}</span>
-          <span class="role">{{ p.ocupacion || '—' }}</span>
+          <span class="role">{{ p.ocupacion || '' }}</span>
         </div>
       </NuxtLink>
     </div>
@@ -69,98 +64,100 @@ const personajesFiltrados = computed(() => {
 </script>
 
 <style scoped>
-.page { padding: 2rem 1.5rem; }
+.page { padding: 2rem max(1.5rem, 5vw); }
 
 .page-header {
-  text-align: center;
-  padding: 2rem 0 2.5rem;
-  border-bottom: 1px solid #1e1810;
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid var(--bd);
   margin-bottom: 2rem;
 }
 
-.eyebrow {
+.page-eyebrow {
+  display: block;
   font-family: 'Cinzel', serif;
-  font-size: 10px;
-  letter-spacing: 0.35em;
-  color: #c8a84b;
-  opacity: 0.7;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: var(--t3);
   text-transform: uppercase;
   margin-bottom: 0.75rem;
 }
 
 .page-title {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
-  color: #f0e4c0;
-  letter-spacing: 0.08em;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  color: var(--t1);
+  letter-spacing: -0.01em;
+  line-height: 1;
 }
-
-.divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 1.25rem;
-}
-.line { height: 1px; width: 60px; background: linear-gradient(90deg, transparent, #c8a84b); }
-.line.right { background: linear-gradient(90deg, #c8a84b, transparent); }
-.gem { width: 6px; height: 6px; background: #c8a84b; transform: rotate(45deg); }
 
 .filters { margin-bottom: 1.5rem; }
 
 .search {
   width: 100%;
-  background: #12100a;
-  border: 1px solid #2a2010;
-  border-radius: 4px;
+  background: var(--s1);
+  border: 1px solid var(--bd);
+  border-radius: 2px;
   padding: 10px 16px;
-  color: #e8dfc8;
+  color: var(--t1);
   font-family: 'Crimson Pro', serif;
   font-size: 1rem;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s var(--ease-out);
 }
-.search::placeholder { color: #4a3a20; }
-.search:focus { border-color: #c8a84b; }
+.search::placeholder { color: var(--t3); }
+.search:focus { border-color: var(--accent); }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
+  gap: 10px;
 }
 
 .card {
-  background: #16120c;
-  border: 1px solid #2a2010;
-  border-radius: 4px;
+  background: var(--s1);
+  border: 1px solid var(--bd);
+  border-radius: 2px;
   overflow: hidden;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: border-color 220ms var(--ease-out), transform 220ms var(--ease-out), box-shadow 260ms ease;
 }
-.card:hover { border-color: #c8a84b; transform: translateY(-2px); }
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 0 0 1px var(--accent), 0 12px 40px rgba(0,0,0,0.5), 0 0 60px var(--accent-dim);
+  }
+  .card:hover .card-img img { transform: scale(1.04); }
+  .card:active { transform: translateY(-1px) scale(0.99); }
+}
 
 .card-img {
   width: 100%;
   aspect-ratio: 3/4;
-  background: linear-gradient(160deg, #1e1810 0%, #0e0c08 100%);
+  background: var(--s2);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
-.card-img img { width: 100%; height: 100%; object-fit: cover; }
+.card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 400ms var(--ease-out);
+}
 
 .initial {
-  font-family: 'Cinzel', serif;
+  font-family: 'Cormorant Garamond', serif;
   font-size: 2rem;
-  color: #2a2010;
-  font-weight: 700;
+  font-weight: 300;
+  color: var(--bd-strong);
 }
 
 .card-info {
   padding: 10px 12px;
-  background: #12100a;
-  border-top: 1px solid #1e1810;
+  background: var(--s1);
+  border-top: 1px solid var(--bd);
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -168,22 +165,30 @@ const personajesFiltrados = computed(() => {
 
 .name {
   font-family: 'Cinzel', serif;
-  font-size: 11px;
-  color: #e8dfc8;
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  color: var(--t1);
+  letter-spacing: 0.06em;
+  display: block;
 }
-.surname { color: #a89070; }
+.surname { color: var(--t2); }
+
 .titulo {
-  font-size: 11px;
-  color: #c8a84b;
+  font-family: 'Crimson Pro', serif;
+  font-size: 12px;
+  color: var(--accent);
   font-style: italic;
-  opacity: 0.8;
 }
-.role { font-size: 11px; color: #5a4a30; font-style: italic; }
+
+.role {
+  font-family: 'Crimson Pro', serif;
+  font-size: 12px;
+  color: var(--t3);
+  font-style: italic;
+}
 
 .empty {
   text-align: center;
-  color: #4a3a20;
+  color: var(--t3);
   font-style: italic;
   padding: 3rem 0;
 }

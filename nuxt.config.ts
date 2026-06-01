@@ -15,6 +15,7 @@ export default defineNuxtConfig({
   googleFonts: {
     families: {
       Cinzel: [400, 600, 700],
+      'Cormorant Garamond': [300, 400, 600, 700],
       'Crimson Pro': { wght: [300, 400], ital: [300, 400] }
     }
   },

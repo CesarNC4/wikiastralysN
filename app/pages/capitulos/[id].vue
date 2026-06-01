@@ -28,11 +28,44 @@ useSeoMeta({ title: capitulo.value ? `Cap. ${capitulo.value.numero} — ${capitu
 </script>
 
 <style scoped>
-.info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; margin-bottom: 2rem; }
-.info-item { background: #16120c; border: 1px solid #2a2010; border-radius: 4px; padding: 10px 14px; display: flex; flex-direction: column; gap: 4px; }
-.label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em; color: #4a3a20; }
-.value { font-size: 0.95rem; color: #e8dfc8; }
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+  margin-bottom: 2rem;
+}
+.info-item {
+  background: var(--s1);
+  border: 1px solid var(--bd);
+  border-radius: 2px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--t3);
+  text-transform: uppercase;
+}
+.value {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.95rem;
+  color: var(--t1);
+}
 .discord { margin-bottom: 2rem; }
-.discord-link { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.15em; color: #c8a84b; border: 1px solid #c8a84b44; padding: 8px 16px; border-radius: 2px; transition: background 0.2s; }
-.discord-link:hover { background: #c8a84b11; }
+.discord-link {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  border: 1px solid rgba(196,32,64,0.3);
+  padding: 8px 16px;
+  border-radius: 2px;
+  transition: background 180ms ease, border-color 180ms ease;
+  text-transform: uppercase;
+}
+.discord-link:hover { background: var(--accent-dim); border-color: var(--accent); }
 </style>

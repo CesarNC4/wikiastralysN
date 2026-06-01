@@ -1,60 +1,77 @@
 <template>
   <div>
+    <!-- ─── HERO ──────────────────────────────────────────── -->
     <section class="hero">
-      <div class="hero-bg"></div>
-      <div class="hero-grid"></div>
-      <p class="eyebrow">Archivo del mundo</p>
-      <h1 class="title">Astralys</h1>
-      <p class="subtitle">Un mundo donde la magia sangra en la historia y cada nombre carga el peso de su destino.</p>
-      <div class="divider">
-        <div class="line"></div>
-        <div class="gem"></div>
-        <div class="line right"></div>
+      <div class="orb orb-crimson"></div>
+      <div class="orb orb-violet"></div>
+
+      <div class="hero-inner">
+        <div class="hero-rail"></div>
+        <div class="hero-text">
+          <p class="eyebrow">Archivo del Mundo</p>
+          <h1 class="title">Astralys</h1>
+          <p class="subtitle">
+            Un mundo donde la magia sangra en la historia<br>
+            y cada nombre carga el peso de su destino.
+          </p>
+        </div>
+      </div>
+
+      <div class="scroll-cue">
+        <div class="scroll-line"></div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="section-header">
-        <span class="section-title">Personajes</span>
-        <div class="section-line"></div>
-        <NuxtLink to="/personajes" class="badge">Ver todos</NuxtLink>
+    <!-- ─── PERSONAJES ────────────────────────────────────── -->
+    <section class="section" ref="persRef">
+      <div class="section-head">
+        <span class="section-label">Personajes</span>
+        <NuxtLink to="/personajes" class="see-all">Ver todos →</NuxtLink>
       </div>
       <div class="chars-grid">
-        <NuxtLink
-          v-for="p in personajes"
+        <div
+          v-for="(p, i) in personajes"
           :key="p.id"
-          :to="`/personajes/${p.id}`"
-          class="char-card"
+          class="char-wrap"
+          :class="{ featured: i === 0 }"
+          :style="`--i:${i}`"
         >
-          <div class="char-img">
-            <img v-if="p.imagen_url" :src="p.imagen_url" :alt="p.nombre" />
-            <span v-else class="char-initial">{{ p.nombre[0] }}</span>
-          </div>
-          <div class="char-info">
-            <span class="char-name">{{ p.nombre }}</span>
-            <span class="char-role">{{ p.ocupacion || '—' }}</span>
-          </div>
-        </NuxtLink>
+          <NuxtLink :to="`/personajes/${p.id}`" class="char-card">
+            <div class="char-img">
+              <img v-if="p.imagen_url" :src="p.imagen_url" :alt="p.nombre" />
+              <span v-else class="char-initial">{{ p.nombre[0] }}</span>
+            </div>
+            <div class="char-info">
+              <span class="char-name">{{ p.nombre }}</span>
+              <span class="char-role">{{ p.ocupacion || '—' }}</span>
+            </div>
+          </NuxtLink>
+        </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="section-header">
-        <span class="section-title">Capítulos</span>
-        <div class="section-line"></div>
-        <NuxtLink to="/capitulos" class="badge">Historia</NuxtLink>
+    <!-- ─── CAPÍTULOS ─────────────────────────────────────── -->
+    <section class="section" ref="capsRef">
+      <div class="section-head">
+        <span class="section-label">Capítulos</span>
+        <NuxtLink to="/capitulos" class="see-all">Historia →</NuxtLink>
       </div>
       <div class="chapters">
         <NuxtLink
-          v-for="cap in capitulos"
+          v-for="(cap, i) in capitulos"
           :key="cap.id"
           :to="`/capitulos/${cap.id}`"
           class="chapter-row"
           :class="{ pendiente: cap.estado === 'Pendiente' }"
+          :style="`--i:${i}`"
         >
-          <span class="chapter-num">Cap. {{ cap.numero }}</span>
-          <span class="chapter-title">{{ cap.titulo }}</span>
-          <span class="chapter-tipo">{{ cap.tipo }}</span>
+          <span class="chapter-num">{{ String(cap.numero).padStart(2, '0') }}</span>
+          <div class="chapter-body">
+            <span class="chapter-title">{{ cap.titulo }}</span>
+            <span class="chapter-tipo">{{ cap.tipo }}</span>
+          </div>
+          <span class="chapter-arrow">→</span>
+          <div class="chapter-accent"></div>
         </NuxtLink>
       </div>
     </section>
@@ -69,7 +86,7 @@ const { data: personajes } = await useAsyncData('home-personajes', async () => {
     .from('personajes')
     .select('id, nombre, ocupacion, imagen_url')
     .eq('visible', true)
-    .limit(6)
+    .limit(5)
   return data
 })
 
@@ -82,171 +99,345 @@ const { data: capitulos } = await useAsyncData('home-capitulos', async () => {
     .limit(6)
   return data
 })
+
+const persRef = ref(null)
+const capsRef = ref(null)
+
+function reveal(el) {
+  if (!el) return
+  const obs = new IntersectionObserver(
+    ([entry]) => { if (entry.isIntersecting) { el.classList.add('revealed'); obs.disconnect() } },
+    { threshold: 0.08 }
+  )
+  obs.observe(el)
+}
+
+onMounted(() => {
+  reveal(persRef.value)
+  reveal(capsRef.value)
+})
 </script>
 
 <style scoped>
+/* ─── HERO ──────────────────────────────────── */
 .hero {
   position: relative;
-  min-height: 360px;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  padding: 2rem 2rem 3rem;
-  text-align: center;
-  border-bottom: 1px solid #1e1810;
+  padding: 6rem max(2rem, 8vw) 4rem;
+  border-bottom: 1px solid var(--bd);
   overflow: hidden;
 }
 
-.hero-bg {
+.orb {
   position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 20% 30%, rgba(180,140,60,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(100,60,160,0.10) 0%, transparent 50%);
+  border-radius: 50%;
   pointer-events: none;
+  filter: blur(90px);
+}
+.orb-crimson {
+  width: 700px; height: 700px;
+  top: -200px; left: -150px;
+  background: radial-gradient(circle, rgba(196,32,64,0.22) 0%, transparent 65%);
+}
+.orb-violet {
+  width: 500px; height: 500px;
+  bottom: -100px; right: 5%;
+  background: radial-gradient(circle, rgba(124,77,224,0.15) 0%, transparent 65%);
 }
 
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.12;
-  background-image:
-    repeating-linear-gradient(90deg, #c8a84b 0px, #c8a84b 1px, transparent 1px, transparent 40px),
-    repeating-linear-gradient(0deg, #c8a84b 0px, #c8a84b 1px, transparent 1px, transparent 40px);
-  mask-image: radial-gradient(ellipse at center, transparent 40%, black 100%);
+.hero-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  max-width: 1000px;
 }
+
+.hero-rail {
+  width: 2px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, var(--accent) 0%, transparent 100%);
+  height: clamp(80px, 18vh, 160px);
+  margin-top: 0.8rem;
+}
+
+.hero-text { display: flex; flex-direction: column; }
 
 .eyebrow {
   font-family: 'Cinzel', serif;
-  font-size: 10px;
-  letter-spacing: 0.35em;
-  color: #c8a84b;
-  margin-bottom: 1rem;
-  opacity: 0.7;
-  position: relative;
+  font-size: clamp(9px, 1.1vw, 11px);
+  letter-spacing: 0.4em;
+  color: var(--accent);
   text-transform: uppercase;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeUp 600ms var(--ease-out) 100ms both;
 }
 
 .title {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(2.8rem, 7vw, 4.5rem);
-  font-weight: 700;
-  color: #f0e4c0;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  margin: 0 0 0.5rem;
-  position: relative;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(4.5rem, 13vw, 10rem);
+  font-weight: 300;
+  color: var(--t1);
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  margin-bottom: 1.75rem;
+  opacity: 0;
+  animation: fadeUp 800ms var(--ease-out) 200ms both;
 }
 
 .subtitle {
-  font-size: 1.1rem;
+  font-family: 'Crimson Pro', serif;
+  font-size: clamp(1rem, 1.7vw, 1.25rem);
   font-style: italic;
-  color: #7a6a50;
-  margin: 0.75rem 0 0;
-  position: relative;
-  max-width: 400px;
-  line-height: 1.6;
+  color: var(--t2);
+  line-height: 1.75;
+  max-width: 440px;
+  opacity: 0;
+  animation: fadeUp 800ms var(--ease-out) 380ms both;
 }
 
-.divider {
+.scroll-cue {
+  position: absolute;
+  bottom: 3rem;
+  left: max(2rem, 8vw);
+  opacity: 0;
+  animation: fadeUp 600ms var(--ease-out) 750ms both;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 52px;
+  background: linear-gradient(180deg, var(--accent) 0%, transparent 100%);
+  animation: scrollPulse 2.4s ease-in-out 1.5s infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { transform: scaleY(1); opacity: 0.45; }
+  50%       { transform: scaleY(1.1); opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── SECTIONS ──────────────────────────────── */
+.section {
+  padding: 3.5rem max(2rem, 6vw);
+  border-bottom: 1px solid var(--bd);
+}
+
+.section-head {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 1.5rem;
-  position: relative;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
 }
 
-.line { height: 1px; width: 60px; background: linear-gradient(90deg, transparent, #c8a84b); }
-.line.right { background: linear-gradient(90deg, #c8a84b, transparent); }
-.gem { width: 6px; height: 6px; background: #c8a84b; transform: rotate(45deg); }
-
-.section { padding: 2rem 1.5rem; border-bottom: 1px solid #1a1408; }
-
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 1.25rem;
-}
-
-.section-title {
+.section-label {
   font-family: 'Cinzel', serif;
-  font-size: 11px;
-  letter-spacing: 0.25em;
-  color: #c8a84b;
+  font-size: clamp(9px, 1.1vw, 11px);
+  letter-spacing: 0.3em;
+  color: var(--t3);
   text-transform: uppercase;
 }
 
-.section-line { flex: 1; height: 1px; background: linear-gradient(90deg, #2a2010, transparent); }
-
-.badge {
+.see-all {
   font-family: 'Cinzel', serif;
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  padding: 3px 8px;
-  border: 1px solid #2a2010;
-  color: #5a4a30;
-  border-radius: 2px;
-  transition: color 0.2s, border-color 0.2s;
+  font-size: clamp(8px, 1vw, 10px);
+  letter-spacing: 0.2em;
+  color: var(--t3);
+  transition: color 180ms var(--ease-out);
 }
-.badge:hover { color: #c8a84b; border-color: #c8a84b; }
+.see-all:hover { color: var(--accent); }
 
-.chars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+/* ─── CHARS GRID ─────────────────────────────── */
+.chars-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 8px;
+}
+
+.char-wrap {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.char-wrap.featured { grid-row: span 2; }
+
+.section.revealed .char-wrap {
+  animation: revealCard 550ms var(--ease-out) calc(var(--i) * 70ms + 80ms) both;
+}
+
+@keyframes revealCard {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 .char-card {
-  background: #16120c;
-  border: 1px solid #2a2010;
-  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--s1);
+  border-radius: 2px;
   overflow: hidden;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: transform 220ms var(--ease-out), box-shadow 260ms ease;
 }
-.char-card:hover { border-color: #c8a84b; transform: translateY(-2px); }
+
+@media (hover: hover) and (pointer: fine) {
+  .char-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 0 0 1px var(--accent),
+      0 16px 48px rgba(0,0,0,0.6),
+      0 0 80px var(--accent-dim);
+  }
+  .char-card:hover .char-img img { transform: scale(1.05); }
+  .char-card:active { transform: translateY(-2px) scale(0.99); }
+}
 
 .char-img {
   width: 100%;
   aspect-ratio: 3/4;
-  background: linear-gradient(160deg, #1e1810 0%, #0e0c08 100%);
+  background: var(--s2);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  flex-shrink: 0;
 }
-.char-img img { width: 100%; height: 100%; object-fit: cover; }
+.char-wrap.featured .char-img { aspect-ratio: 3/5; }
+
+.char-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 400ms var(--ease-out);
+}
 
 .char-initial {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--bd-strong);
+}
+
+.char-info {
+  padding: 12px 14px;
+  background: var(--s1);
+  border-top: 1px solid var(--bd);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.char-name {
   font-family: 'Cinzel', serif;
-  font-size: 2rem;
-  color: #2a2010;
-  font-weight: 700;
+  font-size: clamp(9px, 1.1vw, 11px);
+  letter-spacing: 0.08em;
+  color: var(--t1);
+  display: block;
 }
 
-.char-info { padding: 10px 12px; background: #12100a; border-top: 1px solid #1e1810; }
-.char-name { font-family: 'Cinzel', serif; font-size: 11px; color: #e8dfc8; letter-spacing: 0.1em; display: block; margin-bottom: 2px; }
-.char-role { font-size: 12px; color: #5a4a30; font-style: italic; }
-
-.chapters {
-  border: 1px solid #2a2010;
-  border-radius: 4px;
-  overflow: hidden;
+.char-role {
+  font-family: 'Crimson Pro', serif;
+  font-size: 13px;
+  color: var(--t3);
+  font-style: italic;
 }
+
+/* ─── CHAPTERS ───────────────────────────────── */
+.chapters { display: flex; flex-direction: column; gap: 2px; }
 
 .chapter-row {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 13px 16px;
-  background: #12100a;
-  transition: background 0.15s;
-  border-bottom: 1px solid #1a1408;
+  gap: 1.5rem;
+  padding: 1.1rem 1.25rem 1.1rem 1.5rem;
+  background: var(--s1);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: background 180ms ease;
+  opacity: 0;
+  transform: translateX(-10px);
 }
-.chapter-row:last-child { border-bottom: none; }
-.chapter-row:hover { background: #18150e; }
 
-.chapter-num { font-family: 'Cinzel', serif; font-size: 10px; color: #c8a84b; letter-spacing: 0.15em; min-width: 36px; opacity: 0.6; }
-.chapter-title { font-size: 1rem; color: #c8b890; flex: 1; }
-.chapter-tipo { font-size: 10px; color: #4a3a20; font-family: 'Cinzel', serif; letter-spacing: 0.1em; }
-.chapter-row.pendiente .chapter-title { color: #3a2e1a; }
-.chapter-row.pendiente .chapter-num { opacity: 0.2; }
+.section.revealed .chapter-row {
+  animation: revealRow 480ms var(--ease-out) calc(var(--i) * 55ms + 100ms) both;
+}
+
+@keyframes revealRow {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.chapter-accent {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 220ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chapter-row:hover { background: var(--s2); }
+  .chapter-row:hover .chapter-accent { clip-path: inset(0 0 0% 0); }
+  .chapter-row:hover .chapter-num { color: var(--accent); }
+  .chapter-row:hover .chapter-arrow { color: var(--accent); transform: translateX(3px); }
+  .chapter-row:active { transform: scale(0.995); }
+}
+
+.chapter-num {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(20px, 2.5vw, 30px);
+  font-weight: 700;
+  color: var(--bd-strong);
+  min-width: 52px;
+  line-height: 1;
+  transition: color 180ms ease;
+}
+
+.chapter-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.chapter-title {
+  font-family: 'Crimson Pro', serif;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  color: var(--t1);
+  line-height: 1.3;
+}
+
+.chapter-tipo {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--t3);
+  text-transform: uppercase;
+}
+
+.chapter-arrow {
+  color: var(--t3);
+  font-size: 14px;
+  transition: color 180ms ease, transform 220ms var(--ease-out);
+}
+
+.chapter-row.pendiente .chapter-title { color: var(--t3); }
+.chapter-row.pendiente .chapter-num { color: var(--bd); }
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 640px) {
+  .hero-rail { display: none; }
+  .chars-grid { grid-template-columns: 1fr 1fr; }
+  .char-wrap.featured { grid-column: span 2; grid-row: span 1; }
+  .char-wrap.featured .char-img { aspect-ratio: 16/9; }
+  .chapter-num { min-width: 36px; }
+}
 </style>

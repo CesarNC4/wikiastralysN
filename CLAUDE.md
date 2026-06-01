@@ -19,20 +19,27 @@ Wiki personal para una historia de fantasía épica llamada **Astralys**. Sin fi
 
 ## Diseño
 
-Estética fantasía épica oscura. Nunca cambiar la paleta ni las fuentes sin motivo.
+Estética fantasía épica oscura — paleta "Void Astralys" (violeta-carmesí). Usar siempre las CSS custom properties, nunca valores hardcoded.
 
-| Uso | Valor |
-|-----|-------|
-| Fondo | `#0e0b07` |
-| Superficie | `#12100a`, `#16120c` |
-| Bordes | `#2a2010`, `#1e1810` |
-| Texto principal | `#e8dfc8`, `#f0e4c0` |
-| Texto secundario | `#a89070`, `#7a6a50`, `#5a4a30` |
-| Dorado (acento) | `#c8a84b` |
-| Rojo (peligro) | `#e24b4a` |
+| Token CSS | Valor | Uso |
+|-----------|-------|-----|
+| `--bg` | `#06040f` | Fondo base |
+| `--s1` | `#0c0a1a` | Superficies |
+| `--s2` | `#130f24` | Superficies elevadas |
+| `--bd` | `#1e1a36` | Bordes sutiles |
+| `--bd-strong` | `#2a2450` | Bordes visibles |
+| `--t1` | `#edeaff` | Texto principal |
+| `--t2` | `#7a72a8` | Texto secundario |
+| `--t3` | `#44406a` | Texto terciario |
+| `--accent` | `#c42040` | Carmesí — acento principal |
+| `--accent-dim` | `rgba(196,32,64,0.10)` | Glow de acento |
+| `--gold` | `#9e7824` | Dorado — solo decorativo |
+| `--ease-out` | `cubic-bezier(0.23, 1, 0.32, 1)` | Easing estándar |
+| `--ease-inout` | `cubic-bezier(0.77, 0, 0.175, 1)` | Easing en movimiento |
 
 **Tipografías** (via `@nuxtjs/google-fonts`):
-- **Cinzel** — títulos, labels, navegación (400, 600, 700)
+- **Cormorant Garamond** — display/hero, títulos grandes (300, 400, 600, 700)
+- **Cinzel** — labels, nav, eyebrows, Cinzel uppercase (400, 600, 700)
 - **Crimson Pro** — cuerpo de texto, inputs (300, 400, itálicas)
 
 ---

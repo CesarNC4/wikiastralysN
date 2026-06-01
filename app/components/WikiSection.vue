@@ -22,14 +22,19 @@ defineProps({
 
 .section-title {
   font-family: 'Cinzel', serif;
-  font-size: 11px;
-  letter-spacing: 0.25em;
-  color: #c8a84b;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--t3);
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-.section-line { flex: 1; height: 1px; background: linear-gradient(90deg, #2a2010, transparent); }
+.section-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--bd-strong), transparent); }
 
-.prose { font-size: 1.05rem; line-height: 1.8; color: #c8b890; }
+.prose {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--t2);
+}
 </style>

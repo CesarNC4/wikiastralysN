@@ -4,8 +4,9 @@
 */
 
 .rel-empty {
+  font-family: 'Crimson Pro', serif;
   font-size: 0.85rem;
-  color: #3a2a10;
+  color: var(--t3);
   font-style: italic;
   margin-bottom: 10px;
 }
@@ -15,7 +16,7 @@
   align-items: center;
   gap: 8px;
   padding: 7px 0;
-  border-bottom: 1px solid #1a1408;
+  border-bottom: 1px solid var(--bd);
 }
 .rel-row:last-of-type { border-bottom: none; }
 
@@ -23,32 +24,33 @@
   font-family: 'Cinzel', serif;
   font-size: 8px;
   letter-spacing: 0.12em;
-  border: 1px solid #2a2010;
+  border: 1px solid var(--bd);
   padding: 2px 7px;
-  color: #5a4a30;
+  color: var(--t3);
   border-radius: 2px;
   white-space: nowrap;
+  text-transform: uppercase;
 }
 
 .rel-name {
   flex: 1;
   font-family: 'Crimson Pro', serif;
   font-size: 0.95rem;
-  color: #c8b890;
+  color: var(--t2);
 }
 
 .rel-remove {
   background: transparent;
-  border: 1px solid #3a1a10;
-  color: #6a3030;
+  border: 1px solid var(--bd);
+  color: var(--t3);
   font-size: 0.7rem;
   padding: 3px 7px;
   border-radius: 2px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
   flex-shrink: 0;
 }
-.rel-remove:hover { background: #e24b4a; border-color: #e24b4a; color: #fff; }
+.rel-remove:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
 .rel-add {
   display: flex;
@@ -57,7 +59,7 @@
   flex-wrap: wrap;
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px dashed #2a2010;
+  border-top: 1px dashed var(--bd);
 }
 
 .autocomplete-wrap {
@@ -68,26 +70,26 @@
 
 .rel-input {
   width: 100%;
-  background: #0e0b07;
-  border: 1px solid #2a2010;
+  background: var(--bg);
+  border: 1px solid var(--bd);
   border-radius: 2px;
-  color: #e8dfc8;
+  color: var(--t1);
   font-family: 'Crimson Pro', serif;
   font-size: 0.9rem;
   padding: 7px 10px;
   outline: none;
   box-sizing: border-box;
-  transition: border-color 0.2s;
+  transition: border-color 180ms var(--ease-out);
 }
-.rel-input:focus { border-color: #c8a84b; }
+.rel-input:focus { border-color: var(--accent); }
 
 .autocomplete-list {
   position: absolute;
   top: calc(100% + 2px);
   left: 0;
   right: 0;
-  background: #16120c;
-  border: 1px solid #2a2010;
+  background: var(--s2);
+  border: 1px solid var(--bd);
   border-radius: 2px;
   z-index: 50;
   max-height: 200px;
@@ -98,24 +100,24 @@
   padding: 8px 12px;
   font-family: 'Crimson Pro', serif;
   font-size: 0.9rem;
-  color: #a89070;
+  color: var(--t2);
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 150ms ease;
 }
-.autocomplete-item:hover { background: #1e1810; color: #f0e4c0; }
+.autocomplete-item:hover { background: var(--bd); color: var(--t1); }
 
 .rel-select {
-  background: #0e0b07;
-  border: 1px solid #2a2010;
+  background: var(--bg);
+  border: 1px solid var(--bd);
   border-radius: 2px;
-  color: #a89070;
+  color: var(--t2);
   font-family: 'Crimson Pro', serif;
   font-size: 0.9rem;
   padding: 7px 8px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 180ms var(--ease-out);
 }
-.rel-select:focus { border-color: #c8a84b; }
+.rel-select:focus { border-color: var(--accent); }
 
 .btn-rel-add {
   font-family: 'Cinzel', serif;
@@ -123,21 +125,23 @@
   letter-spacing: 0.12em;
   padding: 8px 14px;
   background: transparent;
-  border: 1px solid #c8a84b;
-  color: #c8a84b;
+  border: 1px solid var(--accent);
+  color: var(--accent);
   border-radius: 2px;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.2s, color 0.2s;
+  transition: background 180ms ease, color 180ms ease;
+  text-transform: uppercase;
 }
-.btn-rel-add:hover:not(:disabled) { background: #c8a84b; color: #0e0b07; }
+.btn-rel-add:hover:not(:disabled) { background: var(--accent); color: #fff; }
 .btn-rel-add:disabled { opacity: 0.3; cursor: not-allowed; }
 
 .rel-msg {
   width: 100%;
+  font-family: 'Crimson Pro', serif;
   font-size: 0.85rem;
   font-style: italic;
   margin-top: 4px;
 }
-.rel-msg.ok  { color: #4a8a40; }
-.rel-msg.err { color: #e24b4a; }
+.rel-msg.ok  { color: #4a9e40; }
+.rel-msg.err { color: var(--accent); }

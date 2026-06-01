@@ -73,15 +73,18 @@ async function logout() {
 <style scoped>
 .admin-layout {
   min-height: 100vh;
-  background: #0e0b07;
-  color: #e8dfc8;
+  background: var(--bg);
+  color: var(--t1);
   font-family: 'Crimson Pro', Georgia, serif;
+  color-scheme: dark;
 }
 
 /* ── Navbar ── */
 .admin-nav {
-  background: #12100a;
-  border-bottom: 1px solid #2a2010;
+  background: rgba(6, 4, 15, 0.90);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--bd);
   padding: 0 1.5rem;
   display: flex;
   align-items: center;
@@ -100,17 +103,17 @@ async function logout() {
 }
 .logo-gem {
   font-size: 10px;
-  color: #c8a84b;
+  color: var(--accent);
 }
 .logo-text {
   font-family: 'Cinzel', serif;
   font-size: 11px;
   letter-spacing: 0.15em;
-  color: #e8dfc8;
+  color: var(--t1);
 }
 .logo-text em {
   font-style: normal;
-  color: #c8a84b;
+  color: var(--accent);
   margin-left: 6px;
 }
 
@@ -124,33 +127,35 @@ async function logout() {
   font-family: 'Cinzel', serif;
   font-size: 9px;
   letter-spacing: 0.15em;
-  color: #5a4a30;
+  color: var(--t3);
   padding: 6px 12px;
-  border: 1px solid #2a2010;
+  border: 1px solid var(--bd);
   border-radius: 2px;
-  transition: color 0.2s, border-color 0.2s;
+  transition: color 180ms var(--ease-out), border-color 180ms var(--ease-out);
   text-decoration: none;
+  text-transform: uppercase;
 }
-.admin-nav-link:hover { color: #a89070; border-color: #4a3a20; }
+.admin-nav-link:hover { color: var(--t2); border-color: var(--bd-strong); }
 
 .btn-logout {
   background: transparent;
-  border: 1px solid #3a1a10;
-  color: #7a3030;
+  border: 1px solid var(--bd);
+  color: var(--t3);
   font-family: 'Cinzel', serif;
   font-size: 9px;
   letter-spacing: 0.15em;
   padding: 7px 14px;
   border-radius: 2px;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
   cursor: pointer;
+  text-transform: uppercase;
 }
-.btn-logout:hover { background: #e24b4a; color: #fff; border-color: #e24b4a; }
+.btn-logout:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
 /* ── Tabs ── */
 .admin-tabs {
-  background: #12100a;
-  border-bottom: 1px solid #1e1810;
+  background: var(--s1);
+  border-bottom: 1px solid var(--bd);
   padding: 0 1.5rem;
   display: flex;
   overflow-x: auto;
@@ -167,14 +172,14 @@ async function logout() {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 14px 14px;
-  color: #5a4a30;
+  color: var(--t3);
   white-space: nowrap;
   border-bottom: 2px solid transparent;
   text-decoration: none;
-  transition: color 0.2s, border-color 0.2s;
+  transition: color 180ms var(--ease-out), border-color 180ms var(--ease-out);
 }
-.admin-tab:hover { color: #a89070; }
-.admin-tab.active { color: #c8a84b; border-bottom-color: #c8a84b; }
+.admin-tab:hover { color: var(--t2); }
+.admin-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* ── Main ── */
 .admin-main {
@@ -198,8 +203,8 @@ async function logout() {
   border: 1px solid;
   pointer-events: none;
 }
-.admin-toast.ok  { background: #0e0b07; border-color: #c8a84b; color: #c8a84b; }
-.admin-toast.err { background: #0e0b07; border-color: #e24b4a; color: #e24b4a; }
+.admin-toast.ok  { background: var(--s1); border-color: #4a9e40; color: #4a9e40; }
+.admin-toast.err { background: var(--s1); border-color: var(--accent); color: var(--accent); }
 
 .toast-enter-active, .toast-leave-active { transition: opacity 0.3s, transform 0.3s; }
 .toast-enter-from, .toast-leave-to { opacity: 0; transform: translateY(8px); }

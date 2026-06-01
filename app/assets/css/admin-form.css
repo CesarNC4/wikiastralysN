@@ -1,56 +1,65 @@
-/* app/assets/css/admin-form.css
-   Importado como <style scoped src="~/assets/css/admin-form.css" /> en cada formulario admin.
-   No usar en layout ni componentes globales.
+/* admin-form.css — Wikiastralys Admin
+   <style scoped src="~/assets/css/admin-form.css" />
+   Usa :deep() donde se necesita penetrar en componentes hijo (Field.vue)
 */
 
+/* ── Form header ── */
 .form-header {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 1.5rem;
+  gap: 12px;
+  margin-bottom: 1.75rem;
   flex-wrap: wrap;
 }
 
 .btn-back {
   font-family: 'Cinzel', serif;
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  padding: 8px 14px;
-  border: 1px solid #2a2010;
-  color: #5a4a30;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  padding: 8px 16px;
+  border: 1px solid var(--bd-strong);
+  color: var(--t2);
   text-decoration: none;
   border-radius: 2px;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color 160ms var(--ease-out), color 160ms var(--ease-out);
+  text-transform: uppercase;
 }
-.btn-back:hover { border-color: #c8a84b; color: #c8a84b; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-back:hover { border-color: var(--accent); color: var(--accent); }
+}
+.btn-back:active { transform: scale(0.97); }
 
 .form-title {
-  font-family: 'Cinzel', serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #f0e4c0;
-  letter-spacing: 0.06em;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--t1);
   flex: 1;
+  letter-spacing: 0.01em;
 }
 
 .btn-save {
   font-family: 'Cinzel', serif;
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.15em;
-  padding: 10px 20px;
-  background: #c8a84b;
-  color: #0e0b07;
+  padding: 10px 24px;
+  background: var(--accent);
+  color: #fff;
   border: none;
   border-radius: 2px;
   cursor: pointer;
-  transition: background 0.2s, opacity 0.2s;
-  margin-left: auto;
+  transition: opacity 160ms ease;
+  text-transform: uppercase;
 }
-.btn-save:hover:not(:disabled) { background: #e0c060; }
-.btn-save:disabled { opacity: 0.4; cursor: not-allowed; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-save:hover:not(:disabled) { opacity: 0.85; }
+}
+.btn-save:active:not(:disabled) { transform: scale(0.97); }
+.btn-save:disabled { opacity: 0.35; cursor: not-allowed; }
 
+/* ── Messages ── */
 .form-error {
-  color: #e24b4a;
+  color: var(--accent);
   font-size: 0.9rem;
   font-style: italic;
   margin-bottom: 1rem;
@@ -60,86 +69,103 @@
   font-family: 'Cinzel', serif;
   font-size: 10px;
   letter-spacing: 0.2em;
-  color: #4a3a20;
-  padding: 2rem 0;
+  color: var(--t3);
+  padding: 3rem 0;
   text-align: center;
+  text-transform: uppercase;
 }
 
-/* ── Grids ── */
+/* ── Layout grids ── */
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 16px;
+  grid-template-columns: 3fr 1fr;
+  gap: 24px;
 }
 @media (max-width: 900px) { .form-grid { grid-template-columns: 1fr; } }
 
-.form-grid-single {
-  max-width: 700px;
-}
+.form-grid-single { max-width: 740px; }
 
 /* ── Sections ── */
 .section {
-  background: #12100a;
-  border: 1px solid #2a2010;
-  border-radius: 4px;
-  padding: 18px 20px;
-  margin-bottom: 14px;
+  background: var(--s1);
+  border: 1px solid var(--bd-strong);
+  border-radius: 2px;
+  padding: 22px 24px;
+  margin-bottom: 16px;
+  transition: border-color 220ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .section:hover { border-color: rgba(196, 32, 64, 0.35); }
 }
 
 .sec-title {
   font-family: 'Cinzel', serif;
-  font-size: 9px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: #c8a84b;
-  opacity: 0.7;
-  margin-bottom: 14px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #2a2010;
-}
-
-/* ── Fields ── */
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-bottom: 12px;
-}
-
-.field-label {
-  font-family: 'Cinzel', serif;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #4a3a20;
+  color: var(--t2);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+  border-bottom: 1px solid var(--bd-strong);
+  border-left: 3px solid var(--accent);
 }
 
+/* ── Field container + label
+   :deep() es necesario porque .field y .field-label son internos
+   de Field.vue — el CSS scoped del padre no los alcanza sin :deep()
+── */
+:deep(.field) {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+:deep(.field-label) {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--t2);
+}
+
+/* ── Inputs
+   El slot content se compila en el contexto del padre,
+   así que hereda el atributo scoped — no necesita :deep()
+── */
 .field input,
 .field select,
 .field textarea {
-  background: #0e0b07;
-  border: 1px solid #2a2010;
+  background: var(--bg);
+  border: 1px solid var(--bd-strong);
   border-radius: 2px;
-  color: #e8dfc8;
+  color: var(--t1);
   font-family: 'Crimson Pro', Georgia, serif;
-  font-size: 0.95rem;
-  padding: 8px 12px;
+  font-size: 1rem;
+  padding: 11px 14px;
+  min-height: 42px;
   outline: none;
   resize: vertical;
   width: 100%;
   box-sizing: border-box;
-  transition: border-color 0.2s;
+  transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+  color-scheme: dark;
 }
+
 .field input:focus,
 .field select:focus,
-.field textarea:focus { border-color: #c8a84b; }
+.field textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
 
 .field input::placeholder,
-.field textarea::placeholder { color: #2a2010; }
+.field textarea::placeholder { color: var(--t3); opacity: 0.5; }
 
 /* ── Row helpers ── */
-.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
 @media (max-width: 600px) { .row2, .row3 { grid-template-columns: 1fr; } }
 
 /* ── Checkbox ── */
@@ -149,13 +175,13 @@
   gap: 8px;
   font-family: 'Crimson Pro', serif;
   font-size: 0.95rem;
-  color: #7a6a50;
+  color: var(--t2);
   cursor: pointer;
 }
 .check-label input[type="checkbox"] {
   width: 15px;
   height: 15px;
-  accent-color: #c8a84b;
+  accent-color: var(--accent);
 }
 
 /* ── Image preview ── */
@@ -163,7 +189,7 @@
   width: 100%;
   max-height: 180px;
   object-fit: cover;
-  border: 1px solid #2a2010;
+  border: 1px solid var(--bd-strong);
   border-radius: 2px;
   margin-top: 8px;
   opacity: 0.85;
@@ -171,49 +197,61 @@
 
 /* ── Dynamic list items ── */
 .dyn-item {
-  background: #0e0b07;
-  border: 1px solid #2a2010;
-  border-radius: 4px;
-  padding: 14px;
-  margin-bottom: 10px;
+  background: var(--bg);
+  border: 1px solid var(--bd-strong);
+  border-radius: 2px;
+  padding: 18px;
+  margin-bottom: 12px;
   position: relative;
+  transition: border-color 220ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .dyn-item:hover { border-color: rgba(196, 32, 64, 0.35); }
 }
 
 .btn-remove {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 10px;
+  right: 10px;
   background: transparent;
-  border: 1px solid #3a1a10;
-  color: #6a3030;
+  border: 1px solid var(--bd-strong);
+  color: var(--t3);
   font-size: 0.75rem;
-  padding: 3px 8px;
+  padding: 3px 10px;
   border-radius: 2px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
 }
-.btn-remove:hover { background: #e24b4a; border-color: #e24b4a; color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-remove:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+}
+.btn-remove:active { transform: scale(0.95); }
 
 .btn-add {
   width: 100%;
   background: transparent;
-  border: 1px dashed #2a2010;
-  color: #4a3a20;
+  border: 1px dashed var(--bd-strong);
+  color: var(--t2);
   font-family: 'Cinzel', serif;
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.15em;
-  padding: 10px;
+  padding: 12px;
   border-radius: 2px;
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
-  margin-top: 4px;
+  transition: border-color 160ms var(--ease-out), color 160ms var(--ease-out);
+  margin-top: 6px;
+  text-transform: uppercase;
 }
-.btn-add:hover { border-color: #c8a84b; color: #c8a84b; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-add:hover { border-color: var(--accent); color: var(--accent); }
+}
+.btn-add:active { transform: scale(0.98); }
 
 /* ── Hint ── */
 .hint {
-  font-size: 0.82rem;
-  color: #3a2a10;
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.88rem;
+  color: var(--t3);
   font-style: italic;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
