@@ -3,7 +3,7 @@
     <div class="form-header">
       <NuxtLink to="/admin/organizaciones" class="btn-back">← Organizaciones</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Organización' : 'Nueva Organización' }}</h1>
-      <div style="display:flex;gap:8px;margin-left:auto">
+      <div class="form-header-actions">
         <NuxtLink v-if="isEdit" :to="`/organizaciones/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
         <button class="btn-save" :disabled="saving" @click="guardar('/admin/organizaciones')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
       </div>
@@ -16,36 +16,71 @@
         <!-- Info general -->
         <div class="section">
           <div class="sec-title">Información General</div>
-          <Field label="Nombre *"><input v-model="f.nombre" /></Field>
-          <Field label="Subtítulo"><input v-model="f.subtitulo" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Nombre *</label>
+            <input class="f-inp" v-model="f.nombre" />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Subtítulo</label>
+            <input class="f-inp" v-model="f.subtitulo" />
+          </div>
           <div class="row2">
-            <Field label="Tipo">
-              <select v-model="f.tipo">
+            <div class="f-group">
+              <label class="f-lbl">Tipo</label>
+              <select class="f-inp" v-model="f.tipo">
                 <option>Otro</option><option>Gremio</option><option>Facción Política</option>
                 <option>Orden Militar</option><option>Culto</option><option>Red Criminal</option>
                 <option>Mercantil</option><option>Académica</option><option>Religiosa</option>
               </select>
-            </Field>
-            <Field label="Estado">
-              <select v-model="f.estado">
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Estado</label>
+              <select class="f-inp" v-model="f.estado">
                 <option>Activa</option><option>Inactiva</option><option>Disuelta</option>
                 <option>Clandestina</option><option>Legendaria</option>
               </select>
-            </Field>
+            </div>
           </div>
-          <Field label="Sede"><input v-model="f.sede" /></Field>
-          <Field label="Descripción"><textarea v-model="f.descripcion" rows="4" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Sede</label>
+            <input class="f-inp" v-model="f.sede" />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Descripción</label>
+            <textarea class="f-area" v-model="f.descripcion" rows="4"></textarea>
+          </div>
         </div>
 
         <div class="section">
           <div class="sec-title">Lore</div>
-          <Field label="Historia"><textarea v-model="f.historia" rows="5" /></Field>
-          <Field label="Objetivo"><textarea v-model="f.objetivo" rows="3" /></Field>
-          <Field label="Ideología"><textarea v-model="f.ideologia" rows="3" /></Field>
-          <Field label="Fundación"><textarea v-model="f.fundacion" rows="3" /></Field>
-          <Field label="Estructura interna"><textarea v-model="f.estructura_interna" rows="4" /></Field>
-          <Field label="Relación con facciones"><textarea v-model="f.relacion_facciones" rows="3" /></Field>
-          <Field label="Notas adicionales"><textarea v-model="f.notas_adicionales" rows="3" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Historia</label>
+            <textarea class="f-area" v-model="f.historia" rows="5"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Objetivo</label>
+            <textarea class="f-area" v-model="f.objetivo" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Ideología</label>
+            <textarea class="f-area" v-model="f.ideologia" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Fundación</label>
+            <textarea class="f-area" v-model="f.fundacion" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Estructura interna</label>
+            <textarea class="f-area" v-model="f.estructura_interna" rows="4"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Relación con facciones</label>
+            <textarea class="f-area" v-model="f.relacion_facciones" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Notas adicionales</label>
+            <textarea class="f-area" v-model="f.notas_adicionales" rows="3"></textarea>
+          </div>
         </div>
 
         <!-- Rangos -->
@@ -137,12 +172,14 @@
       <div>
         <div class="section">
           <div class="sec-title">Imágenes</div>
-          <Field label="Imagen">
-              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/organizaciones" />
-            </Field>
-            <Field label="Banner">
-              <CloudinaryUpload v-model="f.banner_url" label="Banner" icon="🖼" folder="wikiastralys/organizaciones/banners" />
-            </Field>
+          <div class="f-group">
+            <label class="f-lbl">Imagen</label>
+            <CloudinaryUpload v-model="f.imagen_url" folder="wikiastralys/organizaciones" />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Banner</label>
+            <CloudinaryUpload v-model="f.banner_url" folder="wikiastralys/organizaciones/banners" />
+          </div>
         </div>
         <div class="section">
           <div class="sec-title">Visibilidad</div>
@@ -150,8 +187,14 @@
         </div>
         <div class="section" v-if="isEdit">
           <div class="sec-title">Liderazgo y Miembros (texto)</div>
-          <Field label="Liderazgo"><textarea v-model="f.liderazgo" rows="3" /></Field>
-          <Field label="Miembros destacados"><textarea v-model="f.miembros_destacados" rows="3" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Liderazgo</label>
+            <textarea class="f-area" v-model="f.liderazgo" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Miembros destacados</label>
+            <textarea class="f-area" v-model="f.miembros_destacados" rows="3"></textarea>
+          </div>
         </div>
       </div>
     </div>

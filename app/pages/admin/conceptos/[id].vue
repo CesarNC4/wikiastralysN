@@ -3,7 +3,7 @@
     <div class="form-header">
       <NuxtLink to="/admin/conceptos" class="btn-back">← Conceptos</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Concepto' : 'Nuevo Concepto' }}</h1>
-      <div style="display:flex;gap:8px;margin-left:auto">
+      <div class="form-header-actions">
         <NuxtLink v-if="isEdit" :to="`/conceptos/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
         <button class="btn-save" :disabled="saving" @click="guardar('/admin/conceptos')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
       </div>
@@ -14,31 +14,43 @@
       <div>
         <div class="section">
           <div class="sec-title">Clasificación</div>
-          <Field label="Nombre *"><input v-model="f.nombre" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Nombre *</label>
+            <input class="f-inp" v-model="f.nombre" />
+          </div>
           <div class="row2">
-            <Field label="Categoría">
-              <select v-model="f.categoria">
+            <div class="f-group">
+              <label class="f-lbl">Categoría</label>
+              <select class="f-inp" v-model="f.categoria">
                 <option>General</option><option>Historia</option><option>Cosmología</option>
                 <option>Sociedad</option><option>Magia</option><option>Geografía</option><option>Otro</option>
               </select>
-            </Field>
-            <Field label="Orden"><input type="number" v-model.number="f.orden" /></Field>
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Orden</label>
+              <input class="f-inp" type="number" v-model.number="f.orden" />
+            </div>
           </div>
         </div>
         <div class="section">
           <div class="sec-title">Contenido</div>
-          <Field label="Descripción corta"><textarea v-model="f.descripcion" rows="3" /></Field>
-          <Field label="Contenido completo">
+          <div class="f-group">
+            <label class="f-lbl">Descripción corta</label>
+            <textarea class="f-area" v-model="f.descripcion" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Contenido completo</label>
             <RichEditor v-model="f.contenido" placeholder="Texto largo con toda la información del concepto..." />
-          </Field>
+          </div>
         </div>
       </div>
       <div>
         <div class="section">
           <div class="sec-title">Imagen</div>
-          <Field label="Imagen">
-              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/conceptos" />
-            </Field>
+          <div class="f-group">
+            <label class="f-lbl">Imagen</label>
+            <CloudinaryUpload v-model="f.imagen_url" folder="wikiastralys/conceptos" />
+          </div>
         </div>
         <div class="section">
           <div class="sec-title">Visibilidad</div>

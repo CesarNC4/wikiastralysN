@@ -3,7 +3,7 @@
     <div class="form-header">
       <NuxtLink to="/admin/familias" class="btn-back">← Familias</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Familia' : 'Nueva Familia' }}</h1>
-      <div style="display:flex;gap:8px;margin-left:auto">
+      <div class="form-header-actions">
         <NuxtLink v-if="isEdit" :to="`/familias/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
         <button class="btn-save" :disabled="saving" @click="guardar('/admin/familias')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
       </div>
@@ -17,33 +17,67 @@
         <div class="section">
           <div class="sec-title">Identidad</div>
           <div class="row2">
-            <Field label="Nombre *"><input v-model="f.nombre" /></Field>
-            <Field label="Apellido"><input v-model="f.apellido" /></Field>
+            <div class="f-group">
+              <label class="f-lbl">Nombre *</label>
+              <input class="f-inp" v-model="f.nombre" />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Apellido</label>
+              <input class="f-inp" v-model="f.apellido" />
+            </div>
           </div>
-          <Field label="Subtítulo"><input v-model="f.subtitulo" placeholder="Ej: La Casa del Fuego Eterno" /></Field>
-          <Field label="Origen">
-            <select v-model="f.origen">
+          <div class="f-group">
+            <label class="f-lbl">Subtítulo</label>
+            <input class="f-inp" v-model="f.subtitulo" placeholder="Ej: La Casa del Fuego Eterno" />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Origen</label>
+            <select class="f-inp" v-model="f.origen">
               <option>Otro</option><option>Noble</option><option>Real</option>
               <option>Mercantil</option><option>Militar</option><option>Mágica</option>
               <option>Demoníaca</option><option>Divina</option><option>Plebeya</option>
             </select>
-          </Field>
-          <Field label="Descripción"><textarea v-model="f.descripcion" rows="4" /></Field>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Descripción</label>
+            <textarea class="f-area" v-model="f.descripcion" rows="4"></textarea>
+          </div>
         </div>
 
         <div class="section">
           <div class="sec-title">Poder e Influencia</div>
-          <Field label="Poder Económico"><textarea v-model="f.poder_economico" rows="3" /></Field>
-          <Field label="Poder Político"><textarea v-model="f.poder_politico" rows="3" /></Field>
-          <Field label="Poder Militar"><textarea v-model="f.poder_militar" rows="3" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Poder Económico</label>
+            <textarea class="f-area" v-model="f.poder_economico" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Poder Político</label>
+            <textarea class="f-area" v-model="f.poder_politico" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Poder Militar</label>
+            <textarea class="f-area" v-model="f.poder_militar" rows="3"></textarea>
+          </div>
         </div>
 
         <div class="section">
           <div class="sec-title">Historia y Estructura</div>
-          <Field label="Historia"><textarea v-model="f.historia" rows="6" /></Field>
-          <Field label="Núcleo Familiar"><textarea v-model="f.estructura_nucleo" rows="3" /></Field>
-          <Field label="Círculo Extendido"><textarea v-model="f.circulo_extendido" rows="3" /></Field>
-          <Field label="Liderazgo"><textarea v-model="f.liderazgo" rows="3" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Historia</label>
+            <textarea class="f-area" v-model="f.historia" rows="6"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Núcleo Familiar</label>
+            <textarea class="f-area" v-model="f.estructura_nucleo" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Círculo Extendido</label>
+            <textarea class="f-area" v-model="f.circulo_extendido" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Liderazgo</label>
+            <textarea class="f-area" v-model="f.liderazgo" rows="3"></textarea>
+          </div>
         </div>
 
         <!-- Facciones internas -->
@@ -111,10 +145,12 @@
           <!-- Formulario nuevo nodo -->
           <div class="arbol-form">
             <div class="row2">
-              <Field label="Nombre en el árbol">
-                <input v-model="nuevoNodo.nombre" placeholder="Nombre (si no es personaje)" />
-              </Field>
-              <Field label="Vincular personaje">
+              <div class="f-group">
+                <label class="f-lbl">Nombre en el árbol</label>
+                <input class="f-inp" v-model="nuevoNodo.nombre" placeholder="Nombre (si no es personaje)" />
+              </div>
+              <div class="f-group">
+                <label class="f-lbl">Vincular personaje</label>
                 <div class="autocomplete-wrap">
                   <input v-model="nodoPjBusqueda" placeholder="Buscar personaje..." class="rel-input"
                     @input="filtrarNodoPjs" autocomplete="off" />
@@ -123,30 +159,39 @@
                       @mousedown.prevent="seleccionarNodoPj(p)">{{ p.nombre }}</div>
                   </div>
                 </div>
-              </Field>
+              </div>
             </div>
             <div class="row3">
-              <Field label="Generación"><input type="number" v-model.number="nuevoNodo.generacion" /></Field>
-              <Field label="ID Padre (nodo)">
-                <select v-model="nuevoNodo.padre_id">
+              <div class="f-group">
+                <label class="f-lbl">Generación</label>
+                <input class="f-inp" type="number" v-model.number="nuevoNodo.generacion" />
+              </div>
+              <div class="f-group">
+                <label class="f-lbl">ID Padre (nodo)</label>
+                <select class="f-inp" v-model="nuevoNodo.padre_id">
                   <option :value="null">— Ninguno —</option>
                   <option v-for="n in arbol" :key="n.id" :value="n.id">{{ n.nombre }} (Gen {{ n.generacion }})</option>
                 </select>
-              </Field>
-              <Field label="ID Madre (nodo)">
-                <select v-model="nuevoNodo.madre_id">
+              </div>
+              <div class="f-group">
+                <label class="f-lbl">ID Madre (nodo)</label>
+                <select class="f-inp" v-model="nuevoNodo.madre_id">
                   <option :value="null">— Ninguno —</option>
                   <option v-for="n in arbol" :key="n.id" :value="n.id">{{ n.nombre }} (Gen {{ n.generacion }})</option>
                 </select>
-              </Field>
+              </div>
             </div>
             <div class="row2">
-              <Field label="Estado">
-                <select v-model="nuevoNodo.estado">
+              <div class="f-group">
+                <label class="f-lbl">Estado</label>
+                <select class="f-inp" v-model="nuevoNodo.estado">
                   <option>Activo</option><option>Fallecido</option><option>Desaparecido</option><option>Desconocido</option>
                 </select>
-              </Field>
-              <Field label="Notas"><input v-model="nuevoNodo.notas" /></Field>
+              </div>
+              <div class="f-group">
+                <label class="f-lbl">Notas</label>
+                <input class="f-inp" v-model="nuevoNodo.notas" />
+              </div>
             </div>
             <div style="display:flex;gap:12px;align-items:center">
               <label class="check-label"><input type="checkbox" v-model="nuevoNodo.destacado" /> Destacado</label>
@@ -164,12 +209,14 @@
       <div>
         <div class="section">
           <div class="sec-title">Imágenes</div>
-          <Field label="Imagen">
-              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/familias" />
-            </Field>
-            <Field label="Banner">
-              <CloudinaryUpload v-model="f.banner_url" label="Banner" icon="🖼" folder="wikiastralys/familias/banners" />
-            </Field>
+          <div class="f-group">
+            <label class="f-lbl">Imagen</label>
+            <CloudinaryUpload v-model="f.imagen_url" folder="wikiastralys/familias" />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Banner</label>
+            <CloudinaryUpload v-model="f.banner_url" folder="wikiastralys/familias/banners" />
+          </div>
         </div>
         <div class="section">
           <div class="sec-title">Visibilidad</div>

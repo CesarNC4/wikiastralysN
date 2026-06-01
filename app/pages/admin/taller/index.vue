@@ -58,27 +58,50 @@
 
         <div class="hoja-form">
           <div class="row2">
-            <Field label="Título"><input v-model="hojaForm.titulo" /></Field>
-            <Field label="Estado">
-              <select v-model="hojaForm.estado">
+            <div class="f-group">
+              <label class="f-lbl">Título</label>
+              <input class="f-inp" v-model="hojaForm.titulo" />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Estado</label>
+              <select class="f-inp" v-model="hojaForm.estado">
                 <option v-for="e in ESTADOS_HOJA" :key="e" :value="e">{{ e }}</option>
               </select>
-            </Field>
+            </div>
           </div>
           <div class="row2">
-            <Field label="Capítulo vinculado">
-              <select v-model="hojaForm.capitulo_id">
+            <div class="f-group">
+              <label class="f-lbl">Capítulo vinculado</label>
+              <select class="f-inp" v-model="hojaForm.capitulo_id">
                 <option :value="null">—</option>
                 <option v-for="c in cats.capitulos" :key="c.id" :value="c.id">Cap. {{ c.numero }} — {{ c.titulo }}</option>
               </select>
-            </Field>
-            <Field label="Orden"><input type="number" v-model.number="hojaForm.orden" /></Field>
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Orden</label>
+              <input class="f-inp" type="number" v-model.number="hojaForm.orden" />
+            </div>
           </div>
-          <Field label="Conflicto Central"><textarea v-model="hojaForm.conflicto_central" rows="3" /></Field>
-          <Field label="Giro Argumental"><textarea v-model="hojaForm.giro_argumental" rows="3" /></Field>
-          <Field label="Secretos Revelados"><textarea v-model="hojaForm.secretos_revelados" rows="3" /></Field>
-          <Field label="Consecuencias"><textarea v-model="hojaForm.consecuencias" rows="3" /></Field>
-          <Field label="Notas Privadas"><textarea v-model="hojaForm.notas_privadas" rows="3" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Conflicto Central</label>
+            <textarea class="f-area" v-model="hojaForm.conflicto_central" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Giro Argumental</label>
+            <textarea class="f-area" v-model="hojaForm.giro_argumental" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Secretos Revelados</label>
+            <textarea class="f-area" v-model="hojaForm.secretos_revelados" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Consecuencias</label>
+            <textarea class="f-area" v-model="hojaForm.consecuencias" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Notas Privadas</label>
+            <textarea class="f-area" v-model="hojaForm.notas_privadas" rows="3"></textarea>
+          </div>
 
           <!-- Personajes -->
           <div class="sub-section">
@@ -238,19 +261,27 @@
     <div v-if="modalArco" class="modal-overlay" @click.self="modalArco = null">
       <div class="modal-box">
         <h3 class="modal-title">Nuevo Arco</h3>
-        <Field label="Nombre *"><input v-model="modalArco.nombre" /></Field>
-        <Field label="Descripción"><textarea v-model="modalArco.descripcion" rows="2" /></Field>
+        <div class="f-group">
+          <label class="f-lbl">Nombre *</label>
+          <input class="f-inp" v-model="modalArco.nombre" />
+        </div>
+        <div class="f-group">
+          <label class="f-lbl">Descripción</label>
+          <textarea class="f-area" v-model="modalArco.descripcion" rows="2"></textarea>
+        </div>
         <div class="row2">
-          <Field label="Libro">
-            <select v-model="modalArco.libro">
+          <div class="f-group">
+            <label class="f-lbl">Libro</label>
+            <select class="f-inp" v-model="modalArco.libro">
               <option value="Astralys">Astralys</option>
               <option value="Ishkoria">Ishkoria</option>
               <option value="Wonderland">Wonderland</option>
             </select>
-          </Field>
-          <Field label="Color">
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Color</label>
             <input v-model="modalArco.color" type="color" class="color-pick" />
-          </Field>
+          </div>
         </div>
         <div style="display:flex;gap:8px;margin-top:8px">
           <button class="btn-guardar" @click="crearArco">Crear Arco</button>

@@ -3,7 +3,7 @@
     <div class="form-header">
       <NuxtLink to="/admin/lord-demonio" class="btn-back">← Lords Demonio</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Lord Demonio' : 'Nuevo Lord Demonio' }}</h1>
-      <div style="display:flex;gap:8px;margin-left:auto">
+      <div class="form-header-actions">
         <NuxtLink v-if="isEdit" :to="`/lord-demonio/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
         <button class="btn-save" :disabled="saving" @click="guardar('/admin/lord-demonio')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
       </div>
@@ -14,38 +14,68 @@
       <div>
         <div class="section">
           <div class="sec-title">Identificación</div>
-          <Field label="Nombre *"><input v-model="f.nombre" /></Field>
-          <Field label="Dominio"><input v-model="f.dominio" placeholder="Ej: Aniquilación, Odio..." /></Field>
-          <Field label="Título completo"><input v-model="f.titulo" placeholder="Ej: Lord Demonio de la Aniquilación" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Nombre *</label>
+            <input class="f-inp" v-model="f.nombre" />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Dominio</label>
+            <input class="f-inp" v-model="f.dominio" placeholder="Ej: Aniquilación, Odio..." />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Título completo</label>
+            <input class="f-inp" v-model="f.titulo" placeholder="Ej: Lord Demonio de la Aniquilación" />
+          </div>
           <div class="row2">
-            <Field label="Estado">
-              <select v-model="f.estado">
+            <div class="f-group">
+              <label class="f-lbl">Estado</label>
+              <select class="f-inp" v-model="f.estado">
                 <option value="">—</option>
                 <option>Activo</option><option>Sellado</option><option>Derrotado</option>
                 <option>Desconocido</option><option>Eliminado</option>
               </select>
-            </Field>
-            <Field label="Era de aparición"><input v-model="f.era_aparicion" placeholder="Ej: Post-Ishkoria (-900)" /></Field>
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Era de aparición</label>
+              <input class="f-inp" v-model="f.era_aparicion" placeholder="Ej: Post-Ishkoria (-900)" />
+            </div>
           </div>
-          <Field label="Derrotado / Sellado por"><input v-model="f.derrotado_por" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Derrotado / Sellado por</label>
+            <input class="f-inp" v-model="f.derrotado_por" />
+          </div>
         </div>
         <div class="section">
           <div class="sec-title">Descripción y Poderes</div>
-          <Field label="Descripción física"><textarea v-model="f.descripcion_fisica" rows="4" /></Field>
-          <Field label="Devil Trigger"><textarea v-model="f.devil_trigger" rows="4" /></Field>
-          <Field label="Poder especial"><textarea v-model="f.poder_especial" rows="4" /></Field>
-          <Field label="Historia"><textarea v-model="f.historia" rows="6" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Descripción física</label>
+            <textarea class="f-area" v-model="f.descripcion_fisica" rows="4"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Devil Trigger</label>
+            <textarea class="f-area" v-model="f.devil_trigger" rows="4"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Poder especial</label>
+            <textarea class="f-area" v-model="f.poder_especial" rows="4"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Historia</label>
+            <textarea class="f-area" v-model="f.historia" rows="6"></textarea>
+          </div>
         </div>
       </div>
       <div>
         <div class="section">
           <div class="sec-title">Imágenes</div>
-          <Field label="Imagen">
-              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/lord-demonio" />
-            </Field>
-            <Field label="Banner">
-              <CloudinaryUpload v-model="f.banner_url" label="Banner" icon="🖼" folder="wikiastralys/lord-demonio/banners" />
-            </Field>
+          <div class="f-group">
+            <label class="f-lbl">Imagen</label>
+            <CloudinaryUpload v-model="f.imagen_url" folder="wikiastralys/lord-demonio" />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Banner</label>
+            <CloudinaryUpload v-model="f.banner_url" folder="wikiastralys/lord-demonio/banners" />
+          </div>
         </div>
         <div class="section">
           <div class="sec-title">Visibilidad</div>

@@ -3,7 +3,7 @@
     <div class="form-header">
       <NuxtLink to="/admin/misiones" class="btn-back">← Misiones</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Misión' : 'Nueva Misión' }}</h1>
-      <div style="display:flex;gap:8px;margin-left:auto">
+      <div class="form-header-actions">
         <NuxtLink v-if="isEdit" :to="`/misiones/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
         <button class="btn-save" :disabled="saving" @click="guardar('/admin/misiones')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
       </div>
@@ -14,42 +14,73 @@
       <div>
         <div class="section">
           <div class="sec-title">Información General</div>
-          <Field label="Nombre *"><input v-model="f.nombre" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Nombre *</label>
+            <input class="f-inp" v-model="f.nombre" />
+          </div>
           <div class="row2">
-            <Field label="Tipo">
-              <select v-model="f.tipo">
+            <div class="f-group">
+              <label class="f-lbl">Tipo</label>
+              <select class="f-inp" v-model="f.tipo">
                 <option>Abierta</option><option>Historia</option><option>Gremio</option>
                 <option>Personal</option><option>Urgente</option><option>Secreta</option>
               </select>
-            </Field>
-            <Field label="Estado">
-              <select v-model="f.estado">
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Estado</label>
+              <select class="f-inp" v-model="f.estado">
                 <option>Disponible</option><option>En_Progreso</option><option>Completada</option>
                 <option>Fallida</option><option>Cancelada</option>
               </select>
-            </Field>
+            </div>
           </div>
           <div class="row2">
-            <Field label="Nivel de Riesgo">
-              <select v-model="f.nivel_riesgo">
+            <div class="f-group">
+              <label class="f-lbl">Nivel de Riesgo</label>
+              <select class="f-inp" v-model="f.nivel_riesgo">
                 <option v-for="n in ['F','E','D','C','B','A','S']" :key="n" :value="n">{{ n }}</option>
               </select>
-            </Field>
-            <Field label="Rango Mínimo"><input v-model="f.rango_minimo" placeholder="Ej: D, C, B..." /></Field>
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Rango Mínimo</label>
+              <input class="f-inp" v-model="f.rango_minimo" placeholder="Ej: D, C, B..." />
+            </div>
           </div>
-          <Field label="Descripción"><textarea v-model="f.descripcion" rows="5" /></Field>
-          <Field label="Objetivo"><textarea v-model="f.objetivo" rows="4" /></Field>
-          <Field label="Recompensa"><textarea v-model="f.recompensa" rows="3" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Descripción</label>
+            <textarea class="f-area" v-model="f.descripcion" rows="5"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Objetivo</label>
+            <textarea class="f-area" v-model="f.objetivo" rows="4"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Recompensa</label>
+            <textarea class="f-area" v-model="f.recompensa" rows="3"></textarea>
+          </div>
         </div>
         <div class="section">
           <div class="sec-title">Detalles</div>
           <div class="row2">
-            <Field label="Ubicación"><input v-model="f.ubicacion" /></Field>
-            <Field label="Fecha Lore"><input v-model="f.fecha_lore" placeholder="Ej: Año 342" /></Field>
+            <div class="f-group">
+              <label class="f-lbl">Ubicación</label>
+              <input class="f-inp" v-model="f.ubicacion" />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Fecha Lore</label>
+              <input class="f-inp" v-model="f.fecha_lore" placeholder="Ej: Año 342" />
+            </div>
           </div>
         </div>
       </div>
       <div>
+        <div class="section">
+          <div class="sec-title">Imagen</div>
+          <div class="f-group">
+            <label class="f-lbl">Imagen</label>
+            <CloudinaryUpload v-model="f.imagen_url" folder="wikiastralys/misiones" />
+          </div>
+        </div>
         <div class="section">
           <div class="sec-title">Visibilidad</div>
           <label class="check-label"><input type="checkbox" v-model="f.visible" /> Visible al público</label>
@@ -63,7 +94,7 @@ definePageMeta({ layout: 'admin', middleware: 'admin' })
 const f = ref({
   nombre: '', tipo: 'Abierta', estado: 'Disponible', nivel_riesgo: 'D',
   rango_minimo: '', descripcion: '', objetivo: '', recompensa: '',
-  ubicacion: '', fecha_lore: '', visible: true,
+  ubicacion: '', fecha_lore: '', imagen_url: '', visible: true,
 })
 const { isEdit, loading, saving, error, cargar, guardar } = useAdminForm('misiones', f)
 onMounted(cargar)

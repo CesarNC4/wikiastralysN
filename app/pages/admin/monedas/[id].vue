@@ -10,13 +10,26 @@
     <div v-else class="form-grid-single">
       <div class="section">
         <div class="sec-title">Información</div>
-        <Field label="Nombre *"><input v-model="f.nombre" /></Field>
-        <Field label="Denominación"><input v-model="f.denominacion" placeholder="Ej: Therin, Astra..." /></Field>
-        <Field label="Valor relativo"><input v-model="f.valor_relativo" placeholder="Ej: 1 Therin = 100 Coppers" /></Field>
-        <Field label="Descripción"><textarea v-model="f.descripcion" rows="5" /></Field>
-        <Field label="Imagen">
-              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/monedas" />
-            </Field>
+        <div class="f-group">
+          <label class="f-lbl">Nombre *</label>
+          <input class="f-inp" v-model="f.nombre" />
+        </div>
+        <div class="f-group">
+          <label class="f-lbl">Denominación</label>
+          <input class="f-inp" v-model="f.denominacion" placeholder="Ej: Therin, Astra..." />
+        </div>
+        <div class="f-group">
+          <label class="f-lbl">Valor relativo</label>
+          <input class="f-inp" v-model="f.valor_relativo" placeholder="Ej: 1 Therin = 100 Coppers" />
+        </div>
+        <div class="f-group">
+          <label class="f-lbl">Descripción</label>
+          <textarea class="f-area" v-model="f.descripcion" rows="5"></textarea>
+        </div>
+        <div class="f-group">
+          <label class="f-lbl">Imagen</label>
+          <CloudinaryUpload v-model="f.imagen_url" folder="wikiastralys/monedas" />
+        </div>
         <label class="check-label" style="margin-top:12px"><input type="checkbox" v-model="f.visible" /> Visible al público</label>
       </div>
     </div>

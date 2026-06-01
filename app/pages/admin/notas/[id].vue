@@ -14,28 +14,31 @@
       <div class="section">
         <div class="sec-title">Referencia</div>
         <div class="row2">
-          <Field label="Tipo de Entidad">
-            <select v-model="f.entidad_tipo">
+          <div class="f-group">
+            <label class="f-lbl">Tipo de Entidad</label>
+            <select class="f-inp" v-model="f.entidad_tipo">
               <option>personaje</option><option>capitulo</option><option>nacion</option>
               <option>raza</option><option>organizacion</option><option>familia</option>
               <option>bestia</option><option>lord_demonio</option><option>arma</option>
               <option>magia</option><option>mineral</option><option>mision</option>
               <option>concepto</option><option>lore</option><option>general</option>
             </select>
-          </Field>
-          <Field label="ID de la Entidad">
-            <input type="number" v-model.number="f.entidad_id" placeholder="ID del registro" />
-          </Field>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">ID de la Entidad</label>
+            <input class="f-inp" type="number" v-model.number="f.entidad_id" placeholder="ID del registro" />
+          </div>
         </div>
         <p class="hint">Esta nota solo es visible en el panel admin. Sirve para apuntes del autor.</p>
       </div>
 
       <div class="section">
         <div class="sec-title">Contenido</div>
-        <Field label="Nota *">
-          <textarea v-model="f.contenido" rows="16"
-            placeholder="Apuntes privados, spoilers, decisiones narrativas pendientes..." />
-        </Field>
+        <div class="f-group">
+          <label class="f-lbl">Nota *</label>
+          <textarea class="f-area" v-model="f.contenido" rows="16"
+            placeholder="Apuntes privados, spoilers, decisiones narrativas pendientes..."></textarea>
+        </div>
       </div>
 
       <div v-if="isEdit" class="section">

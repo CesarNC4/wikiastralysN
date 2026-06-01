@@ -3,7 +3,7 @@
     <div class="form-header">
       <NuxtLink to="/admin/magia" class="btn-back">← Magia</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Fundamento' : 'Nuevo Fundamento de Magia' }}</h1>
-      <div style="display:flex;gap:8px;margin-left:auto">
+      <div class="form-header-actions">
         <NuxtLink v-if="isEdit" :to="`/magia/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
         <button class="btn-save" :disabled="saving" @click="guardar('/admin/magia')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
       </div>
@@ -15,10 +15,14 @@
       <div>
         <div class="section">
           <div class="sec-title">Clasificación</div>
-          <Field label="Nombre *"><input v-model="f.nombre" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Nombre *</label>
+            <input class="f-inp" v-model="f.nombre" />
+          </div>
           <div class="row3">
-            <Field label="Categoría">
-              <select v-model="f.categoria">
+            <div class="f-group">
+              <label class="f-lbl">Categoría</label>
+              <select class="f-inp" v-model="f.categoria">
                 <option>Concepto</option>
                 <option>Fundamento</option>
                 <option>Consciencia</option>
@@ -27,29 +31,38 @@
                 <option>Habilidad</option>
                 <option>Otro</option>
               </select>
-            </Field>
-            <Field label="Subcategoría">
-              <input v-model="f.subcategoria" placeholder="Ej: Essentia, Zenithra..." />
-            </Field>
-            <Field label="Orden"><input type="number" v-model.number="f.orden" /></Field>
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Subcategoría</label>
+              <input class="f-inp" v-model="f.subcategoria" placeholder="Ej: Essentia, Zenithra..." />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Orden</label>
+              <input class="f-inp" type="number" v-model.number="f.orden" />
+            </div>
           </div>
-          <Field label="Descripción breve"><textarea v-model="f.descripcion" rows="3" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Descripción breve</label>
+            <textarea class="f-area" v-model="f.descripcion" rows="3"></textarea>
+          </div>
         </div>
 
         <div class="section">
           <div class="sec-title">Contenido</div>
-          <Field label="Contenido completo">
+          <div class="f-group">
+            <label class="f-lbl">Contenido completo</label>
             <RichEditor v-model="f.contenido" placeholder="Explicación completa del fundamento, mecánicas, lore, ejemplos..." />
-          </Field>
+          </div>
         </div>
       </div>
 
       <div>
         <div class="section">
           <div class="sec-title">Imagen</div>
-          <Field label="Imagen">
-              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/magia" />
-            </Field>
+          <div class="f-group">
+            <label class="f-lbl">Imagen</label>
+            <CloudinaryUpload v-model="f.imagen_url" folder="wikiastralys/magia" />
+          </div>
         </div>
         <div class="section">
           <div class="sec-title">Visibilidad</div>

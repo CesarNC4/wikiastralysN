@@ -3,7 +3,7 @@
     <div class="form-header">
       <NuxtLink to="/admin/personajes" class="btn-back">← Personajes</NuxtLink>
       <h1 class="form-title">{{ isEdit ? `${f.nombre || 'Editar Personaje'}` : 'Nuevo Personaje' }}</h1>
-      <div style="display:flex;gap:8px;margin-left:auto">
+      <div class="form-header-actions">
         <NuxtLink v-if="isEdit" :to="`/personajes/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
         <button class="btn-save" :disabled="saving" @click="guardarPersonaje">
           {{ saving ? 'Guardando...' : 'Guardar' }}
@@ -230,7 +230,7 @@
           <div class="sec-title">Habilidades y Técnicas</div>
           <p class="hint">Podés vincular a una técnica del catálogo de magia o crear una personalizada.</p>
           <div v-for="(hab, i) in habilidades" :key="i" class="dyn-item">
-            <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="habilidades.splice(i,1)">✕</button>
+            <button class="btn-remove" @click="habilidades.splice(i,1)">✕</button>
             <p class="dyn-num">Habilidad #{{ i + 1 }}</p>
             <div class="f-group">
               <label class="f-lbl">Vincular al catálogo de magia (opcional)</label>
@@ -287,7 +287,7 @@
           <div class="sec-title">Equipamiento</div>
           <p class="hint">Tipo: Arma, Objeto_magico, Objeto_Importante, Familiares.</p>
           <div v-for="(item, i) in equipamiento" :key="i" class="dyn-item">
-            <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="equipamiento.splice(i,1)">✕</button>
+            <button class="btn-remove" @click="equipamiento.splice(i,1)">✕</button>
             <p class="dyn-num">Item #{{ i + 1 }}</p>
             <div class="row2">
               <div class="f-group"><label class="f-lbl">Nombre</label><input class="f-inp" v-model="item.nombre" /></div>
@@ -318,7 +318,7 @@
           <p v-if="!isEdit" class="hint">💡 Guarda el personaje primero.</p>
           <template v-else>
             <div v-for="(o, i) in objetos" :key="o.id_objeto || i" class="dyn-item">
-              <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="eliminarObjeto(i)">✕</button>
+              <button class="btn-remove" @click="eliminarObjeto(i)">✕</button>
               <div class="row2">
                 <div class="f-group"><label class="f-lbl">Nombre</label><input class="f-inp" v-model="o.nombre" /></div>
                 <div class="f-group">
@@ -348,7 +348,7 @@
         <div class="section">
           <div class="sec-title">Vínculos con Personajes y Organizaciones</div>
           <div v-for="(rel, i) in relaciones" :key="i" class="dyn-item">
-            <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="relaciones.splice(i,1)">✕</button>
+            <button class="btn-remove" @click="relaciones.splice(i,1)">✕</button>
             <p class="dyn-num">Relación #{{ i + 1 }}</p>
             <div class="f-group">
               <label class="f-lbl">Nombre (personaje u organización)</label>
@@ -448,7 +448,7 @@
         <div class="section">
           <div class="sec-title">Naciones</div>
           <div v-for="(n, i) in naciones" :key="i" class="dyn-item">
-            <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="naciones.splice(i,1)">✕</button>
+            <button class="btn-remove" @click="naciones.splice(i,1)">✕</button>
             <div class="row2">
               <div class="f-group">
                 <label class="f-lbl">Nación</label>
@@ -466,7 +466,7 @@
         <div class="section">
           <div class="sec-title">Razas</div>
           <div v-for="(r, i) in razas" :key="i" class="dyn-item">
-            <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="razas.splice(i,1)">✕</button>
+            <button class="btn-remove" @click="razas.splice(i,1)">✕</button>
             <div class="row3">
               <div class="f-group">
                 <label class="f-lbl">Raza</label>
@@ -490,7 +490,7 @@
         <div class="section">
           <div class="sec-title">Organizaciones</div>
           <div v-for="(o, i) in organizaciones" :key="i" class="dyn-item">
-            <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="organizaciones.splice(i,1)">✕</button>
+            <button class="btn-remove" @click="organizaciones.splice(i,1)">✕</button>
             <div class="row2">
               <div class="f-group">
                 <label class="f-lbl">Organización</label>
@@ -511,7 +511,7 @@
         <div class="section">
           <div class="sec-title">Eventos Clave del Personaje</div>
           <div v-for="(e, i) in eventos" :key="i" class="dyn-item">
-            <button class="btn-remove" style="position:absolute;top:10px;right:10px" @click="eventos.splice(i,1)">✕</button>
+            <button class="btn-remove" @click="eventos.splice(i,1)">✕</button>
             <p class="dyn-num">Evento #{{ i + 1 }}</p>
             <div class="row2">
               <div class="f-group"><label class="f-lbl">Fecha</label><input class="f-inp" v-model="e.fecha" placeholder="Ej: Año 1520" /></div>
@@ -559,7 +559,7 @@
         <p class="hint" style="margin-bottom:20px">Esta información nunca es visible para los lectores.</p>
 
         <div class="section">
-          <div class="sec-title" style="color: var(--accent)">Estado Narrativo</div>
+          <div class="sec-title sec-title--accent">Estado Narrativo</div>
           <div class="row2">
             <div class="f-group">
               <label class="f-lbl">Estado Narrativo</label>
@@ -595,7 +595,7 @@
             <label class="f-lbl">Narrativa definida — {{ narrativa.porcentaje_escrito }}%</label>
             <div style="display:flex;align-items:center;gap:12px">
               <div class="pct-bar-bg"><div class="pct-bar-fill" :style="`width:${narrativa.porcentaje_escrito}%`"></div></div>
-              <input class="f-inp" type="number" min="0" max="100" v-model.number="narrativa.porcentaje_escrito" style="width:70px;text-align:center" />
+              <input class="f-inp inp-sm" type="number" min="0" max="100" v-model.number="narrativa.porcentaje_escrito" />
             </div>
           </div>
           <div class="row2">
@@ -632,7 +632,7 @@
         <!-- Hitos -->
         <div class="section">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-            <div class="sec-title" style="color: var(--accent); margin-bottom:0">Hitos Narrativos</div>
+            <div class="sec-title sec-title--accent sec-title--no-mb">Hitos Narrativos</div>
             <button class="btn-add" style="width:auto;padding:6px 16px" @click="mostrarFormHito = !mostrarFormHito">+ Hito</button>
           </div>
           <p v-if="!hitos.length" class="hint">Sin hitos registrados.</p>
@@ -1186,36 +1186,6 @@ function tipoHitoIcon(tipo) {
 .btn-edit { font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.1em; padding:5px 12px; border:1px solid var(--bd); color:var(--t3); text-decoration:none; border-radius:2px; transition:border-color 180ms var(--ease-out), color 180ms var(--ease-out); }
 .btn-edit:hover { border-color:var(--accent); color:var(--accent); }
 
-/* ── Row helpers (all tabs) ── */
-.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-@media (max-width: 600px) { .row2, .row3 { grid-template-columns: 1fr; } }
-
-/* ── f-group spacing ── */
-.f-group { margin-bottom: 16px; }
-.row2 .f-group, .row3 .f-group, .basico-grid .f-group { margin-bottom: 0; }
-
-/* ── Textarea ── */
-.f-area {
-  background: var(--bg);
-  border: 1px solid var(--bd-strong);
-  border-radius: 2px;
-  color: var(--t1);
-  font-family: 'Crimson Pro', Georgia, serif;
-  font-size: 1rem;
-  padding: 10px 12px;
-  width: 100%;
-  box-sizing: border-box;
-  outline: none;
-  resize: vertical;
-  color-scheme: dark;
-  transition: border-color 160ms, box-shadow 160ms;
-}
-.f-area:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-dim);
-}
-
 /* ── BÁSICO: 6-column grid (LCM of 2 and 3) ── */
 .basico-grid {
   display: grid;
@@ -1226,36 +1196,7 @@ function tipoHitoIcon(tipo) {
 .col-half  { grid-column: span 3; }
 .col-full  { grid-column: span 6; }
 .col-third { grid-column: span 2; }
-.f-group { display: flex; flex-direction: column; }
-.f-lbl {
-  font-family: 'Cinzel', serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--t2);
-  display: block;
-  margin-bottom: 6px;
-}
-.f-inp {
-  background: var(--bg);
-  border: 1px solid var(--bd-strong);
-  border-radius: 2px;
-  color: var(--t1);
-  font-family: 'Crimson Pro', Georgia, serif;
-  font-size: 1rem;
-  height: 42px;
-  padding: 10px 12px;
-  width: 100%;
-  box-sizing: border-box;
-  outline: none;
-  color-scheme: dark;
-  transition: border-color 160ms, box-shadow 160ms;
-}
-.f-inp:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-dim);
-}
+.basico-grid .f-group { margin-bottom: 0; }
 .check-row { display: flex; flex-direction: column; }
 @media (max-width: 640px) {
   .basico-grid { grid-template-columns: 1fr; }

@@ -3,7 +3,7 @@
     <div class="form-header">
       <NuxtLink to="/admin/minerales" class="btn-back">← Minerales</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Mineral' : 'Nuevo Mineral' }}</h1>
-      <div style="display:flex;gap:8px;margin-left:auto">
+      <div class="form-header-actions">
         <NuxtLink v-if="isEdit" :to="`/minerales/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
         <button class="btn-save" :disabled="saving" @click="guardar('/admin/minerales')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
       </div>
@@ -14,19 +14,24 @@
       <div>
         <div class="section">
           <div class="sec-title">Clasificación</div>
-          <Field label="Nombre *"><input v-model="f.nombre" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Nombre *</label>
+            <input class="f-inp" v-model="f.nombre" />
+          </div>
           <div class="row2">
-            <Field label="Tipo / Origen">
-              <select v-model="f.tipo">
+            <div class="f-group">
+              <label class="f-lbl">Tipo / Origen</label>
+              <select class="f-inp" v-model="f.tipo">
                 <option value="">—</option>
                 <option value="Natural">Natural</option>
                 <option value="Arcano">Arcano</option>
                 <option value="Disonante">Disonante</option>
                 <option value="Sintetico">Sintético</option>
               </select>
-            </Field>
-            <Field label="Rareza">
-              <select v-model="f.rareza">
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Rareza</label>
+              <select class="f-inp" v-model="f.rareza">
                 <option value="">—</option>
                 <option value="Comun">Común</option>
                 <option value="Infrecuente">Infrecuente</option>
@@ -34,24 +39,40 @@
                 <option value="Epico">Épico</option>
                 <option value="Legendario">Legendario</option>
               </select>
-            </Field>
+            </div>
           </div>
-          <Field label="Descripción breve"><textarea v-model="f.descripcion" rows="4" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Descripción breve</label>
+            <textarea class="f-area" v-model="f.descripcion" rows="4"></textarea>
+          </div>
         </div>
         <div class="section">
           <div class="sec-title">Propiedades</div>
-          <Field label="Propiedades"><textarea v-model="f.propiedades" rows="4" /></Field>
-          <Field label="Usos"><textarea v-model="f.usos" rows="4" /></Field>
-          <Field label="Origen / Localización"><input v-model="f.origen" placeholder="Dónde se puede encontrar" /></Field>
-          <Field label="Notas adicionales"><textarea v-model="f.notas" rows="3" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Propiedades</label>
+            <textarea class="f-area" v-model="f.propiedades" rows="4"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Usos</label>
+            <textarea class="f-area" v-model="f.usos" rows="4"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Origen / Localización</label>
+            <input class="f-inp" v-model="f.origen" placeholder="Dónde se puede encontrar" />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Notas adicionales</label>
+            <textarea class="f-area" v-model="f.notas" rows="3"></textarea>
+          </div>
         </div>
       </div>
       <div>
         <div class="section">
           <div class="sec-title">Imagen</div>
-          <Field label="Imagen">
-              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/minerales" />
-            </Field>
+          <div class="f-group">
+            <label class="f-lbl">Imagen</label>
+            <CloudinaryUpload v-model="f.imagen_url" folder="wikiastralys/minerales" />
+          </div>
         </div>
         <div class="section">
           <div class="sec-title">Visibilidad</div>

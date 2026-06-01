@@ -3,7 +3,7 @@
     <div class="form-header">
       <NuxtLink to="/admin/capitulos" class="btn-back">← Capítulos</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Capítulo' : 'Nuevo Capítulo' }}</h1>
-      <div style="display:flex;gap:8px;margin-left:auto">
+      <div class="form-header-actions">
         <NuxtLink v-if="isEdit" :to="`/capitulos/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
         <button class="btn-save" :disabled="saving" @click="guardar('/admin/capitulos', 'titulo')">{{ saving ? 'Guardando...' : 'Guardar' }}</button>
       </div>
@@ -17,35 +17,64 @@
         <div class="section">
           <div class="sec-title">Identificación</div>
           <div class="row2">
-            <Field label="Número *"><input v-model="f.numero" placeholder="Ej: 1, 2A, Prólogo..." /></Field>
-            <Field label="Libro"><input v-model="f.libro" placeholder="Astralys" /></Field>
+            <div class="f-group">
+              <label class="f-lbl">Número *</label>
+              <input class="f-inp" v-model="f.numero" placeholder="Ej: 1, 2A, Prólogo..." />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Libro</label>
+              <input class="f-inp" v-model="f.libro" placeholder="Astralys" />
+            </div>
           </div>
-          <Field label="Título *"><input v-model="f.titulo" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Título *</label>
+            <input class="f-inp" v-model="f.titulo" />
+          </div>
           <div class="row2">
-            <Field label="Tipo">
-              <select v-model="f.tipo">
+            <div class="f-group">
+              <label class="f-lbl">Tipo</label>
+              <select class="f-inp" v-model="f.tipo">
                 <option>Principal</option><option>Secundario</option><option>Flashback</option>
                 <option>Prólogo</option><option>Epílogo</option><option>Interludio</option>
               </select>
-            </Field>
-            <Field label="Tipo Temporal">
-              <select v-model="f.tipo_temporal">
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Tipo Temporal</label>
+              <select class="f-inp" v-model="f.tipo_temporal">
                 <option>Presente</option><option>Pasado</option><option>Futuro</option><option>Atemporal</option>
               </select>
-            </Field>
+            </div>
           </div>
           <div class="row2">
-            <Field label="Marco Narrativo"><input v-model="f.marco_narrativo" placeholder="Ej: Batalla de Ishkoria" /></Field>
-            <Field label="Narrador"><input v-model="f.narrador" placeholder="Ej: Omnisciente, Kael..." /></Field>
+            <div class="f-group">
+              <label class="f-lbl">Marco Narrativo</label>
+              <input class="f-inp" v-model="f.marco_narrativo" placeholder="Ej: Batalla de Ishkoria" />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Narrador</label>
+              <input class="f-inp" v-model="f.narrador" placeholder="Ej: Omnisciente, Kael..." />
+            </div>
           </div>
-          <Field label="Fecha Lore"><input v-model="f.fecha_lore" placeholder="Ej: Año 340, Día del Solsticio..." /></Field>
-          <Field label="URL Discord"><input v-model="f.discord_url" placeholder="https://discord.com/..." /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Fecha Lore</label>
+            <input class="f-inp" v-model="f.fecha_lore" placeholder="Ej: Año 340, Día del Solsticio..." />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">URL Discord</label>
+            <input class="f-inp" v-model="f.discord_url" placeholder="https://discord.com/..." />
+          </div>
         </div>
 
         <div class="section">
           <div class="sec-title">Sinopsis</div>
-          <Field label="Descripción (pública)"><textarea v-model="f.descripcion" rows="5" /></Field>
-          <Field label="Notas privadas (solo admin)"><textarea v-model="f.notas_privadas" rows="4" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Descripción (pública)</label>
+            <textarea class="f-area" v-model="f.descripcion" rows="5"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Notas privadas (solo admin)</label>
+            <textarea class="f-area" v-model="f.notas_privadas" rows="4"></textarea>
+          </div>
         </div>
 
         <div class="section" v-if="isEdit">

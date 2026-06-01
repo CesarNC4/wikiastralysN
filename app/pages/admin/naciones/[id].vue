@@ -3,7 +3,7 @@
     <div class="form-header">
       <NuxtLink to="/admin/naciones" class="btn-back">← Naciones</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Nación' : 'Nueva Nación' }}</h1>
-      <div style="display:flex;gap:8px;margin-left:auto">
+      <div class="form-header-actions">
         <NuxtLink v-if="isEdit" :to="`/naciones/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
         <button class="btn-save" :disabled="saving" @click="guardar('/admin/naciones')">
           {{ saving ? 'Guardando...' : 'Guardar' }}
@@ -18,16 +18,26 @@
       <div>
         <div class="section">
           <div class="sec-title">Identidad</div>
-          <Field label="Nombre *"><input v-model="f.nombre" /></Field>
-          <Field label="Subtítulo"><input v-model="f.subtitulo" placeholder="Ej: La Nación del Fuego Eterno" /></Field>
-          <Field label="Descripción breve"><textarea v-model="f.descripcion" rows="3" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Nombre *</label>
+            <input class="f-inp" v-model="f.nombre" />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Subtítulo</label>
+            <input class="f-inp" v-model="f.subtitulo" placeholder="Ej: La Nación del Fuego Eterno" />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Descripción breve</label>
+            <textarea class="f-area" v-model="f.descripcion" rows="3"></textarea>
+          </div>
         </div>
 
         <div class="section">
           <div class="sec-title">Lore Divino</div>
           <div class="row2">
-            <Field label="Elemento Fundamental">
-              <select v-model="f.elemento_fundamental">
+            <div class="f-group">
+              <label class="f-lbl">Elemento Fundamental</label>
+              <select class="f-inp" v-model="f.elemento_fundamental">
                 <option value="">— Sin asignar —</option>
                 <option value="Pyro">🔥 Pyro</option>
                 <option value="Hydro">💧 Hydro</option>
@@ -37,29 +47,56 @@
                 <option value="Vento">🌪️ Vento</option>
                 <option value="Geo">🪨 Geo</option>
               </select>
-            </Field>
-            <Field label="Concepto Divino"><input v-model="f.concepto_divino" placeholder="Ej: Contratos, Eternidad..." /></Field>
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Concepto Divino</label>
+              <input class="f-inp" v-model="f.concepto_divino" placeholder="Ej: Contratos, Eternidad..." />
+            </div>
           </div>
-          <Field label="Dios Fundador"><input v-model="f.dios_fundador" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Dios Fundador</label>
+            <input class="f-inp" v-model="f.dios_fundador" />
+          </div>
         </div>
 
         <div class="section">
           <div class="sec-title">Datos</div>
           <div class="row2">
-            <Field label="Capital"><input v-model="f.capital" /></Field>
-            <Field label="Gobierno"><input v-model="f.gobierno" /></Field>
+            <div class="f-group">
+              <label class="f-lbl">Capital</label>
+              <input class="f-inp" v-model="f.capital" />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Gobierno</label>
+              <input class="f-inp" v-model="f.gobierno" />
+            </div>
           </div>
           <div class="row2">
-            <Field label="Idioma"><input v-model="f.idioma" /></Field>
-            <Field label="Población"><input v-model="f.poblacion" /></Field>
+            <div class="f-group">
+              <label class="f-lbl">Idioma</label>
+              <input class="f-inp" v-model="f.idioma" />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Población</label>
+              <input class="f-inp" v-model="f.poblacion" />
+            </div>
           </div>
         </div>
 
         <div class="section">
           <div class="sec-title">Historia y Sociedad</div>
-          <Field label="Historia"><textarea v-model="f.historia" rows="6" /></Field>
-          <Field label="Estructura y Sociedad"><textarea v-model="f.estructura" rows="5" /></Field>
-          <Field label="Estado Actual"><textarea v-model="f.estado_actual" rows="4" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Historia</label>
+            <textarea class="f-area" v-model="f.historia" rows="6"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Estructura y Sociedad</label>
+            <textarea class="f-area" v-model="f.estructura" rows="5"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Estado Actual</label>
+            <textarea class="f-area" v-model="f.estado_actual" rows="4"></textarea>
+          </div>
         </div>
 
         <!-- Razas — solo si ya existe el registro -->
@@ -128,12 +165,14 @@
       <div>
         <div class="section">
           <div class="sec-title">Imágenes</div>
-          <Field label="Imagen">
-              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/naciones" />
-            </Field>
-            <Field label="Banner">
-              <CloudinaryUpload v-model="f.banner_url" label="Banner" icon="🖼" folder="wikiastralys/naciones/banners" />
-            </Field>
+          <div class="f-group">
+            <label class="f-lbl">Imagen</label>
+            <CloudinaryUpload v-model="f.imagen_url" folder="wikiastralys/naciones" />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Banner</label>
+            <CloudinaryUpload v-model="f.banner_url" folder="wikiastralys/naciones/banners" />
+          </div>
         </div>
         <div class="section">
           <div class="sec-title">Visibilidad</div>

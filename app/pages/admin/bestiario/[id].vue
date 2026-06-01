@@ -3,7 +3,7 @@
     <div class="form-header">
       <NuxtLink to="/admin/bestiario" class="btn-back">← Bestiario</NuxtLink>
       <h1 class="form-title">{{ isEdit ? 'Editar Bestia' : 'Nueva Bestia' }}</h1>
-      <div style="display:flex;gap:8px;margin-left:auto">
+      <div class="form-header-actions">
         <NuxtLink v-if="isEdit" :to="`/bestiario/${id}`" target="_blank" class="btn-back">Ver wiki ↗</NuxtLink>
         <button class="btn-save" :disabled="saving" @click="guardar('/admin/bestiario')">
           {{ saving ? 'Guardando...' : 'Guardar' }}
@@ -18,34 +18,58 @@
         <div class="section">
           <div class="sec-title">Información General</div>
           <div class="row2">
-            <Field label="Nombre *"><input v-model="f.nombre" /></Field>
-            <Field label="Subtítulo"><input v-model="f.subtitulo" /></Field>
+            <div class="f-group">
+              <label class="f-lbl">Nombre *</label>
+              <input class="f-inp" v-model="f.nombre" />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Subtítulo</label>
+              <input class="f-inp" v-model="f.subtitulo" />
+            </div>
           </div>
-          <Field label="Nivel de Amenaza">
-            <select v-model="f.nivel_amenaza">
+          <div class="f-group">
+            <label class="f-lbl">Nivel de Amenaza</label>
+            <select class="f-inp" v-model="f.nivel_amenaza">
               <option value="">—</option>
               <option v-for="n in ['F','E','D','C','B','A','S','SS','SSS']" :key="n" :value="n">{{ n }}</option>
             </select>
-          </Field>
-          <Field label="Descripción"><textarea v-model="f.descripcion" rows="5" /></Field>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Descripción</label>
+            <textarea class="f-area" v-model="f.descripcion" rows="5"></textarea>
+          </div>
         </div>
         <div class="section">
           <div class="sec-title">Biología y Comportamiento</div>
-          <Field label="Ciclo de Vida"><textarea v-model="f.ciclo_vida" rows="4" /></Field>
-          <Field label="Comportamiento"><textarea v-model="f.comportamiento" rows="4" /></Field>
-          <Field label="Hábitat"><textarea v-model="f.habitat" rows="3" /></Field>
-          <Field label="Recursos (drops)"><textarea v-model="f.recursos" rows="3" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Ciclo de Vida</label>
+            <textarea class="f-area" v-model="f.ciclo_vida" rows="4"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Comportamiento</label>
+            <textarea class="f-area" v-model="f.comportamiento" rows="4"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Hábitat</label>
+            <textarea class="f-area" v-model="f.habitat" rows="3"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Recursos (drops)</label>
+            <textarea class="f-area" v-model="f.recursos" rows="3"></textarea>
+          </div>
         </div>
       </div>
       <div>
         <div class="section">
           <div class="sec-title">Imágenes</div>
-          <Field label="Imagen">
-              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/bestiario" />
-            </Field>
-            <Field label="Banner">
-              <CloudinaryUpload v-model="f.banner_url" label="Banner" icon="🖼" folder="wikiastralys/bestiario/banners" />
-            </Field>
+          <div class="f-group">
+            <label class="f-lbl">Imagen</label>
+            <CloudinaryUpload v-model="f.imagen_url" folder="wikiastralys/bestiario" />
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Banner</label>
+            <CloudinaryUpload v-model="f.banner_url" folder="wikiastralys/bestiario/banners" />
+          </div>
         </div>
         <div class="section">
           <div class="sec-title">Visibilidad</div>

@@ -12,9 +12,13 @@
 
     <div v-else>
       <!-- Tabs -->
-      <div class="inner-tabs">
-        <button v-for="t in TABS" :key="t.key" class="inner-tab"
-          :class="{ active: tab === t.key }" @click="tab = t.key">{{ t.label }}</button>
+      <div class="tabs-wrap">
+        <button class="tabs-arrow" @click="scrollTabs(-1)">‹</button>
+        <div class="inner-tabs" ref="tabsEl">
+          <button v-for="t in TABS" :key="t.key" class="inner-tab"
+            :class="{ active: tab === t.key }" @click="tab = t.key">{{ t.label }}</button>
+        </div>
+        <button class="tabs-arrow" @click="scrollTabs(1)">›</button>
       </div>
 
       <!-- Tab: General -->
@@ -22,30 +26,62 @@
         <div>
           <div class="section">
             <div class="sec-title">Identidad</div>
-            <Field label="Nombre *"><input v-model="f.nombre" /></Field>
-            <Field label="Subtítulo"><input v-model="f.subtitulo" /></Field>
-            <Field label="Lema"><input v-model="f.lema" /></Field>
-            <Field label="Sede"><input v-model="f.sede" /></Field>
-            <Field label="Descripción"><textarea v-model="f.descripcion" rows="5" /></Field>
-            <Field label="Historia"><textarea v-model="f.historia" rows="6" /></Field>
+            <div class="f-group">
+              <label class="f-lbl">Nombre *</label>
+              <input class="f-inp" v-model="f.nombre" />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Subtítulo</label>
+              <input class="f-inp" v-model="f.subtitulo" />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Lema</label>
+              <input class="f-inp" v-model="f.lema" />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Sede</label>
+              <input class="f-inp" v-model="f.sede" />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Descripción</label>
+              <textarea class="f-area" v-model="f.descripcion" rows="5"></textarea>
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Historia</label>
+              <textarea class="f-area" v-model="f.historia" rows="6"></textarea>
+            </div>
           </div>
           <div class="section">
             <div class="sec-title">Estructura</div>
-            <Field label="Estructura Global"><textarea v-model="f.estructura_global" rows="5" /></Field>
-            <Field label="Jerarquía de Rangos"><textarea v-model="f.jerarquia_rangos" rows="5" /></Field>
-            <Field label="Sistema de Misiones"><textarea v-model="f.sistema_misiones" rows="5" /></Field>
-            <Field label="Recompensas"><textarea v-model="f.recompensas" rows="4" /></Field>
+            <div class="f-group">
+              <label class="f-lbl">Estructura Global</label>
+              <textarea class="f-area" v-model="f.estructura_global" rows="5"></textarea>
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Jerarquía de Rangos</label>
+              <textarea class="f-area" v-model="f.jerarquia_rangos" rows="5"></textarea>
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Sistema de Misiones</label>
+              <textarea class="f-area" v-model="f.sistema_misiones" rows="5"></textarea>
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Recompensas</label>
+              <textarea class="f-area" v-model="f.recompensas" rows="4"></textarea>
+            </div>
           </div>
         </div>
         <div>
           <div class="section">
             <div class="sec-title">Imágenes</div>
-            <Field label="Imagen">
-              <CloudinaryUpload v-model="f.imagen_url" label="Imagen" folder="wikiastralys/gremio" />
-            </Field>
-            <Field label="Banner">
-              <CloudinaryUpload v-model="f.banner_url" label="Banner" icon="🖼" folder="wikiastralys/gremio/banners" />
-            </Field>
+            <div class="f-group">
+              <label class="f-lbl">Imagen</label>
+              <CloudinaryUpload v-model="f.imagen_url" folder="wikiastralys/gremio" />
+            </div>
+            <div class="f-group">
+              <label class="f-lbl">Banner</label>
+              <CloudinaryUpload v-model="f.banner_url" folder="wikiastralys/gremio/banners" />
+            </div>
           </div>
         </div>
       </div>
@@ -54,13 +90,34 @@
       <div v-if="tab === 'codigo'" class="form-grid-single">
         <div class="section">
           <div class="sec-title">Principios y Normas</div>
-          <Field label="Principios Generales"><textarea v-model="f.principios_generales" rows="5" /></Field>
-          <Field label="Normas y Contratos"><textarea v-model="f.normas_contratos" rows="5" /></Field>
-          <Field label="Conducta Aceptable"><textarea v-model="f.conducta_aceptable" rows="5" /></Field>
-          <Field label="Conducta Intolerable"><textarea v-model="f.conducta_intolerable" rows="5" /></Field>
-          <Field label="Uso de la Fuerza"><textarea v-model="f.uso_fuerza" rows="4" /></Field>
-          <Field label="Lealtad y Discreción"><textarea v-model="f.lealtad_discrecion" rows="4" /></Field>
-          <Field label="Principio de la Espada Neutral"><textarea v-model="f.principio_espada_neutral" rows="4" /></Field>
+          <div class="f-group">
+            <label class="f-lbl">Principios Generales</label>
+            <textarea class="f-area" v-model="f.principios_generales" rows="5"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Normas y Contratos</label>
+            <textarea class="f-area" v-model="f.normas_contratos" rows="5"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Conducta Aceptable</label>
+            <textarea class="f-area" v-model="f.conducta_aceptable" rows="5"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Conducta Intolerable</label>
+            <textarea class="f-area" v-model="f.conducta_intolerable" rows="5"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Uso de la Fuerza</label>
+            <textarea class="f-area" v-model="f.uso_fuerza" rows="4"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Lealtad y Discreción</label>
+            <textarea class="f-area" v-model="f.lealtad_discrecion" rows="4"></textarea>
+          </div>
+          <div class="f-group">
+            <label class="f-lbl">Principio de la Espada Neutral</label>
+            <textarea class="f-area" v-model="f.principio_espada_neutral" rows="4"></textarea>
+          </div>
         </div>
       </div>
 
@@ -180,6 +237,8 @@ const TABS = [
   { key: 'historial', label: 'Historial' },
 ]
 const tab = ref('general')
+const tabsEl = ref(null)
+function scrollTabs(dir) { tabsEl.value?.scrollBy({ left: dir * 220, behavior: 'smooth' }) }
 
 const f = ref({
   nombre: 'Gremio de Aventureros', subtitulo: '', lema: '', sede: '',
@@ -308,13 +367,31 @@ async function quitarHistorial(h) {
 <style scoped src="~/assets/css/admin-form.css" />
 <style scoped src="~/assets/css/admin-relations.css" />
 <style scoped>
+.tabs-wrap {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--bd-strong);
+}
+.tabs-arrow {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  color: var(--t3);
+  font-size: 1.1rem;
+  padding: 6px 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 160ms;
+  margin-bottom: -1px;
+}
+.tabs-arrow:hover { color: var(--accent); }
 .inner-tabs {
   display: flex;
   gap: 2px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid #2a2010;
   overflow-x: auto;
   scrollbar-width: none;
+  flex: 1;
 }
 .inner-tabs::-webkit-scrollbar { display: none; }
 .inner-tab {
